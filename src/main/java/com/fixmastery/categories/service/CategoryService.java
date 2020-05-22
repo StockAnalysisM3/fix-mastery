@@ -31,6 +31,7 @@ public class CategoryService {
             fix.getValue(),
             new MessageType(fix.getValue(), fix.getDescr())
         ));
+
         return repo;
     };
 

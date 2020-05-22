@@ -1,15 +1,16 @@
 package com.fixmastery.categories.controller;
 
-import com.fixmastery.categories.dao.FixRepository;
 import com.fixmastery.categories.dto.Fix;
+import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
+import com.fixmastery.categories.model.OrderType;
+import com.fixmastery.categories.model.Side;
 import com.fixmastery.categories.service.CategoryService;
+import com.google.common.collect.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
 
@@ -32,11 +33,31 @@ public class CategoryController {
         return new ResponseEntity<Iterator<OrderStatus>>(allOrderStatuses, HttpStatus.OK);
     }
 
-    @GetMapping("/orderstatus/size")
+    @GetMapping("/size")
     public ResponseEntity<?> getOrderStatusesSize() {
-        long allOrderStatuses = categoryService.orderStatusRepo().values().size();
-        return new ResponseEntity<Long>(allOrderStatuses, HttpStatus.OK);
+        Iterator<Fix> allFix = categoryService.getAllAsFix().iterator();
+        long numOfCategories = Iterators.size(allFix);
+        return new ResponseEntity<Long>(numOfCategories, HttpStatus.OK);
     }
+
+    @GetMapping("/messagetype")
+    public ResponseEntity<?> getAllMessageTypes() {
+        Iterator<MessageType> allMessageTypes = categoryService.messageTypeRepo().values().iterator();
+        return new ResponseEntity<Iterator<MessageType>>(allMessageTypes, HttpStatus.OK);
+    }
+
+    @GetMapping("/ordertype")
+    public ResponseEntity<?> getOrderTypes(){
+        Iterator<OrderType> allOrderTypes = categoryService.orderTypeRepo().values().iterator();
+        return new ResponseEntity<Iterator<OrderType>>(allOrderTypes, HttpStatus.OK);
+    }
+
+    @GetMapping("/sides")
+    public ResponseEntity<?> allSides() {
+        Iterator<Side> allSides = categoryService.sideRepo().values().iterator();
+        return new ResponseEntity<Iterator<Side>>(allSides, HttpStatus.OK);
+    }
+
 
 
 }

@@ -15,13 +15,13 @@ export default class Welcome extends Component {
     render() {
         return (
             <div>
-                <h3>Current Example States loaded: {this.state.size}</h3>
+                <h3>Number of Categories loaded: {this.state.size}</h3>
             </div>
         )
     }
 
     componentDidMount = async () => {
-        const {data} = await axios.get("/api/categories/orderstatus/size")
+        const {data} = await axios.get("/api/categories/size")
         this.setState({size: data})
     }
 }

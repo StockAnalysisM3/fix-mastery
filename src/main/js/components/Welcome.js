@@ -21,7 +21,7 @@ export default class Welcome extends Component {
     }
 
     componentDidMount = async () => {
-        const {data} = await axios.get("/api/capitals/size")
+        const {data} = await axios.get("/api/categories/orderstatus/size")
         this.setState({size: data})
     }
 }

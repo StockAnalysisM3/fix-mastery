@@ -9,6 +9,7 @@ public class Fix {
     @Id
     @GeneratedValue
     private int Id;
+
     private int tag;
     private String name;
     private String value;

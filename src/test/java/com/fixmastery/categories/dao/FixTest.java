@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class FixServiceTest {
+class FixTest {
 
     @Autowired
     private CategoryService service;

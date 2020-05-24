@@ -5,8 +5,8 @@ import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
 import com.fixmastery.categories.model.Side;
+import com.fixmastery.categories.dao.CategoryRepository;
 import com.fixmastery.categories.service.CategoryService;
-import com.google.common.collect.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,43 +19,46 @@ import java.util.Iterator;
 public class CategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryRepository catRepo;
+
+    @Autowired
+    private CategoryService catService;
+
 
     @GetMapping("/")
     public ResponseEntity<?> getAllInFix() {
-        Iterable<FixData> allFix = categoryService.getAllAsFix();
+        Iterable<FixData> allFix = catService.getAllAsFix();
         return new ResponseEntity<Iterable<FixData>>(allFix, HttpStatus.OK);
     }
 
     @GetMapping("/orderstatus")
     public ResponseEntity<?> getOrderStatuses() {
-        Iterator<OrderStatus> allOrderStatuses = categoryService.orderStatusRepo().values().iterator();
-        return new ResponseEntity<Iterator<OrderStatus>>(allOrderStatuses, HttpStatus.OK);
+        Iterable<OrderStatus> allOrderStatuses = catService.getAllOrderStatuses();
+        return new ResponseEntity<Iterable<OrderStatus>>(allOrderStatuses, HttpStatus.OK);
     }
 
     @GetMapping("/size")
     public ResponseEntity<?> getOrderStatusesSize() {
-        Iterator<FixData> allFix = categoryService.getAllAsFix().iterator();
-        long numOfCategories = Iterators.size(allFix);
+        long numOfCategories = catService.getFixSize();
         return new ResponseEntity<Long>(numOfCategories, HttpStatus.OK);
     }
 
     @GetMapping("/messagetype")
     public ResponseEntity<?> getAllMessageTypes() {
-        Iterator<MessageType> allMessageTypes = categoryService.messageTypeRepo().values().iterator();
-        return new ResponseEntity<Iterator<MessageType>>(allMessageTypes, HttpStatus.OK);
+        Iterable<MessageType> allMessageTypes = catService.getAllMessageTypes();
+        return new ResponseEntity<Iterable<MessageType>>(allMessageTypes, HttpStatus.OK);
     }
 
     @GetMapping("/ordertype")
     public ResponseEntity<?> getOrderTypes(){
-        Iterator<OrderType> allOrderTypes = categoryService.orderTypeRepo().values().iterator();
-        return new ResponseEntity<Iterator<OrderType>>(allOrderTypes, HttpStatus.OK);
+        Iterable<OrderType> allOrderTypes = catService.getAllOrderTypes();
+        return new ResponseEntity<Iterable<OrderType>>(allOrderTypes, HttpStatus.OK);
     }
 
     @GetMapping("/sides")
     public ResponseEntity<?> allSides() {
-        Iterator<Side> allSides = categoryService.sideRepo().values().iterator();
-        return new ResponseEntity<Iterator<Side>>(allSides, HttpStatus.OK);
+        Iterable<Side> allSides = catService.getAllSides();
+        return new ResponseEntity<Iterable<Side>>(allSides, HttpStatus.OK);
     }
 
 

@@ -3,9 +3,11 @@ package com.fixmastery.categories.dto;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Fix {
+@Table(name = "Fix")
+public class FixData {
     @Id
     @GeneratedValue
     private int Id;
@@ -15,7 +17,7 @@ public class Fix {
     private String value;
     private String descr;
 
-    public Fix() {
+    public FixData() {
     }
 
     public int getId() {

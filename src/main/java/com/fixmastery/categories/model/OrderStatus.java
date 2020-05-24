@@ -1,5 +1,7 @@
 package com.fixmastery.categories.model;
 
+import javax.persistence.Entity;
+
 public class OrderStatus {
     private String id;
     private String name;

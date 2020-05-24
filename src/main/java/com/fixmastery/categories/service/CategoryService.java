@@ -1,7 +1,7 @@
 package com.fixmastery.categories.service;
 
 import com.fixmastery.categories.dao.FixRepository;
-import com.fixmastery.categories.dto.Fix;
+import com.fixmastery.categories.dto.FixData;
 import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
@@ -18,13 +18,13 @@ public class CategoryService {
     @Autowired
     private FixRepository repo;
 
-    public Iterable<Fix> getAllAsFix() {
+    public Iterable<FixData> getAllAsFix() {
         return repo.findAll();
     }
 
     public Map<String, MessageType> messageTypeRepo(){
-        Iterable<Fix> categoriesAsFix = repo.findAllByTag(35);
-        Iterator<Fix> fixIterator = categoriesAsFix.iterator();
+        Iterable<FixData> categoriesAsFix = repo.findAllByTag(35);
+        Iterator<FixData> fixIterator = categoriesAsFix.iterator();
         Map<String, MessageType> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(
@@ -36,8 +36,8 @@ public class CategoryService {
     };
 
     public Map<String, OrderStatus> orderStatusRepo(){
-        Iterable<Fix> categoriesAsFix = repo.findAllByTag(39);
-        Iterator<Fix> fixIterator = categoriesAsFix.iterator();
+        Iterable<FixData> categoriesAsFix = repo.findAllByTag(39);
+        Iterator<FixData> fixIterator = categoriesAsFix.iterator();
         Map<String, OrderStatus> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(
@@ -48,8 +48,8 @@ public class CategoryService {
     };
 
     public Map<String, OrderType> orderTypeRepo(){
-        Iterable<Fix> allOrderStatusesAsFix = repo.findAllByTag(40);
-        Iterator<Fix> fixIterator = allOrderStatusesAsFix.iterator();
+        Iterable<FixData> allOrderStatusesAsFix = repo.findAllByTag(40);
+        Iterator<FixData> fixIterator = allOrderStatusesAsFix.iterator();
         Map<String, OrderType> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(
@@ -60,8 +60,8 @@ public class CategoryService {
     };
 
     public Map<String, Side> sideRepo(){
-        Iterable<Fix> categoriesAsFix = repo.findAllByTag(54);
-        Iterator<Fix> fixIterator = categoriesAsFix.iterator();
+        Iterable<FixData> categoriesAsFix = repo.findAllByTag(54);
+        Iterator<FixData> fixIterator = categoriesAsFix.iterator();
         Map<String, Side> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(

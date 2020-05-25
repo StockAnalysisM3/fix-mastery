@@ -13,11 +13,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Repository
-public class CategoryRepository {
+public class CategoryMaps {
     @Autowired
     private FixRepository repo;
 
-    public Map<String, MessageType> messageTypeRepo(){
+    public Map<String, MessageType> messageTypeMap(){
         Iterable<FixData> categoriesAsFix = repo.findAllByTag(35);
         Iterator<FixData> fixIterator = categoriesAsFix.iterator();
         Map<String, MessageType> repo = new HashMap<>();
@@ -30,7 +30,7 @@ public class CategoryRepository {
         return repo;
     };
 
-    public Map<String, OrderStatus> orderStatusRepo(){
+    public Map<String, OrderStatus> orderStatusMap(){
         Iterable<FixData> categoriesAsFix = repo.findAllByTag(39);
         Iterator<FixData> fixIterator = categoriesAsFix.iterator();
         Map<String, OrderStatus> repo = new HashMap<>();
@@ -42,7 +42,7 @@ public class CategoryRepository {
         return repo;
     };
 
-    public Map<String, OrderType> orderTypeRepo(){
+    public Map<String, OrderType> orderTypeMap(){
         Iterable<FixData> allOrderStatusesAsFix = repo.findAllByTag(40);
         Iterator<FixData> fixIterator = allOrderStatusesAsFix.iterator();
         Map<String, OrderType> repo = new HashMap<>();
@@ -54,7 +54,7 @@ public class CategoryRepository {
         return repo;
     };
 
-    public Map<String, Side> sideRepo(){
+    public Map<String, Side> sideMap(){
         Iterable<FixData> categoriesAsFix = repo.findAllByTag(54);
         Iterator<FixData> fixIterator = categoriesAsFix.iterator();
         Map<String, Side> repo = new HashMap<>();

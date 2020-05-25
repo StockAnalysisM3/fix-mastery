@@ -5,21 +5,15 @@ import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
 import com.fixmastery.categories.model.Side;
-import com.fixmastery.categories.dao.CategoryRepository;
 import com.fixmastery.categories.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
-
 @RestController
 @RequestMapping("/api/categories/")
 public class CategoryController {
-
-    @Autowired
-    private CategoryRepository catRepo;
 
     @Autowired
     private CategoryService catService;

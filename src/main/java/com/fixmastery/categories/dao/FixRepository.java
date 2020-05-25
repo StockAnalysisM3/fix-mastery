@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FixRepository extends CrudRepository<FixData, Integer>, JpaSpecificationExecutor<FixData> {
     Iterable<FixData> findAllByTag(int tag);
-
 }

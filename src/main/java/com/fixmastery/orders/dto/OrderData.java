@@ -8,7 +8,9 @@ import com.fixmastery.categories.model.Side;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Orders - This DTO will be used to
@@ -101,153 +103,6 @@ public class OrderData {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getDateTimeStamp() {
-        return dateTimeStamp;
-    }
-
-    public void setDateTimeStamp(String stringDateTime) {
-        // TIMESTAMP 2016-07-18 07:55:00.000000
-        String[] stringDateTimeArr = stringDateTime
-                .split("(\\d*)-(\\d*)-(\\d*)\\s(\\d*):(\\d*):(\\d*)");
-        int year = Integer.parseInt(stringDateTimeArr[0]);
-        int month = Integer.parseInt(stringDateTimeArr[1]);
-        int day = Integer.parseInt(stringDateTimeArr[2]);
-        int hour = Integer.parseInt(stringDateTimeArr[3]);
-        int minute = Integer.parseInt(stringDateTimeArr[4]);
-        int second = Integer.parseInt(stringDateTimeArr[5]);
-
-        this.dateTimeStamp
-            = LocalDateTime.of(year, month, day, hour, minute, second);
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
-    }
-
-    public String getInstanceId() {
-        return instanceId;
-    }
-
-    public void setInstanceId(String instanceId) {
-        this.instanceId = instanceId;
-    }
-
-    public String getSystemId() {
-        return systemId;
-    }
-
-    public void setSystemId(String systemId) {
-        this.systemId = systemId;
-    }
-
-    public int getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(int instrument) {
-        this.instrument = instrument;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
-    }
-
-    public String getVenue() {
-        return venue;
-    }
-
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
-
-    public String getSide() {
-        return side;
-    }
-
-    public void setSide(String side) {
-        this.side = side;
-    }
-
-    public Long getInitialQuantity() {
-        return initialQuantity;
-    }
-
-    public void setInitialQuantity(Long initialQuantity) {
-        this.initialQuantity = initialQuantity == null ? 0 : initialQuantity;
-    }
-
-    public Long getCompletedQuantity() {
-        return completedQuantity;
-    }
-
-    public void setCompletedQuantity(Long completedQuantity) {
-        this.completedQuantity = completedQuantity == null ? 0 : completedQuantity;
-    }
-
-    public Long getInProgressQuantity() {
-        return inProgressQuantity;
-    }
-
-    public void setInProgressQuantity(Long inProgressQuantity) {
-        this.inProgressQuantity = inProgressQuantity == null ? 0 : inProgressQuantity;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = new BigDecimal(Float.toString(price));
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     @Override

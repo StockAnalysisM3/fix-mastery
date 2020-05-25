@@ -18,32 +18,32 @@ import static org.junit.jupiter.api.Assertions.*;
 class FixDataRepoTest {
 
     @Autowired
-    private CategoryRepository catRepo;
+    private CategoryMaps catRepo;
 
     @Test
     void orderStatusRepoTest() {
-        Map<String, OrderStatus> orderStatuses= catRepo.orderStatusRepo();
+        Map<String, OrderStatus> orderStatuses= catRepo.orderStatusMap();
         int numberOfOrderStatuses = orderStatuses.size();
         assertEquals(14, numberOfOrderStatuses, "There should be 14 order statuses");
     }
 
     @Test
     void messageTypeRepoTest() {
-        Map<String, MessageType> messageStatuses = catRepo.messageTypeRepo();
+        Map<String, MessageType> messageStatuses = catRepo.messageTypeMap();
         int numberOfMessageStatuses = messageStatuses.size();
         assertEquals(3, numberOfMessageStatuses, "There should be three message statuses");
     }
 
     @Test
     void sideRepoTest() {
-        Map<String, Side> sideTypes = catRepo.sideRepo();
+        Map<String, Side> sideTypes = catRepo.sideMap();
         int numberOfSideTypes = sideTypes.size();
         assertEquals(16, numberOfSideTypes, "There should be 16 side types");
     }
 
     @Test
     void orderTypeRepoTest() {
-        Map<String, OrderType> orderTypes = catRepo.orderTypeRepo();
+        Map<String, OrderType> orderTypes = catRepo.orderTypeMap();
         int numberOfOrderTypes = orderTypes.size();
         assertEquals(19, numberOfOrderTypes, "There should be 19 order types");
     }

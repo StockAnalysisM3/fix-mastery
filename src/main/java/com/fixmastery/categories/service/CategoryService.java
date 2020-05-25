@@ -1,6 +1,6 @@
 package com.fixmastery.categories.service;
 
-import com.fixmastery.categories.dao.CategoryRepository;
+import com.fixmastery.categories.dao.CategoryMaps;
 import com.fixmastery.categories.dao.FixRepository;
 import com.fixmastery.categories.dto.FixData;
 import com.fixmastery.categories.model.MessageType;
@@ -16,7 +16,7 @@ public class CategoryService {
     private FixRepository fixRepo;
 
     @Autowired
-    private CategoryRepository catRepo;
+    private CategoryMaps catMaps;
 
     public Iterable<FixData> getAllAsFix() {
         return fixRepo.findAll();
@@ -27,19 +27,19 @@ public class CategoryService {
     }
 
     public Iterable<MessageType> getAllMessageTypes() {
-        return catRepo.messageTypeRepo().values();
+        return catMaps.messageTypeMap().values();
     }
 
     public Iterable<OrderStatus> getAllOrderStatuses() {
-        return catRepo.orderStatusRepo().values();
+        return catMaps.orderStatusMap().values();
     }
 
     public Iterable<OrderType> getAllOrderTypes() {
-        return catRepo.orderTypeRepo().values();
+        return catMaps.orderTypeMap().values();
     }
 
     public Iterable<Side> getAllSides() {
-        return catRepo.sideRepo().values();
+        return catMaps.sideMap().values();
     }
 
 }

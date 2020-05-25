@@ -1,16 +1,9 @@
 package com.fixmastery.orders.dto;
 
-import com.fixmastery.categories.model.MessageType;
-import com.fixmastery.categories.model.OrderStatus;
-import com.fixmastery.categories.model.OrderType;
-import com.fixmastery.categories.model.Side;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Orders - This DTO will be used to
@@ -19,25 +12,6 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Table(name = "Orders")
 public class OrderData {
-
-//    private long id;
-//    private LocalDateTime datetimestamp;
-//    private String clientid;
-//    private String rootordid;
-//    private String parentordid;
-//    private String msgtype;
-//    private String orderid;
-//    private String systemid;
-//    private int instrument;
-//    private String ordstatus;
-//    private String ordtype;
-//    private String venue;
-//    private String side;
-//    private int orderqty;
-//    private int cumqty;
-//    private int leavesqty;
-//    private String price; // will be cast to BigDecimal
-//    private String descr;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,6 +53,11 @@ public class OrderData {
     @Column(name="side")
     private String side;
 
+    /**
+     * For initial, completed, and pending quantities,
+     *      we are assuming values will be given in integers
+     */
+
     @Column(name="orderqty", columnDefinition = "Integer default 0")
     private Long initialQuantity;
 
@@ -86,7 +65,7 @@ public class OrderData {
     private Long completedQuantity;
 
     @Column(name="leavesqty", columnDefinition = "Integer default 0")
-    private Long inProgressQuantity;
+    private Long pendingQuantity;
 
     @Column(columnDefinition = "Float default 0")
     private BigDecimal price;
@@ -101,8 +80,72 @@ public class OrderData {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public LocalDateTime getDateTimeStamp() {
+        return dateTimeStamp;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public String getSystemId() {
+        return systemId;
+    }
+
+    public int getInstrument() {
+        return instrument;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public String getSide() {
+        return side;
+    }
+
+    public Long getInitialQuantity() {
+        return initialQuantity;
+    }
+
+    public Long getCompletedQuantity() {
+        return completedQuantity;
+    }
+
+    public Long getPendingQuantity() {
+        return pendingQuantity;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     @Override
@@ -123,7 +166,7 @@ public class OrderData {
                 ", side='" + side + '\'' +
                 ", initialQuantity=" + initialQuantity +
                 ", completedQuantity=" + completedQuantity +
-                ", inProgressQuantity=" + inProgressQuantity +
+                ", inProgressQuantity=" + pendingQuantity +
                 ", price=" + price +
                 ", message='" + message + '\'' +
                 '}';

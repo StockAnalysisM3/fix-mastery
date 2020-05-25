@@ -6,16 +6,16 @@ import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
 import com.fixmastery.categories.model.Side;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-@Repository
-public class CategoryMaps {
+@Component
+public class CategoryAdapter {
     @Autowired
-    private FixRepository repo;
+    private FixDataRepository repo;
 
     public Map<String, MessageType> messageTypeMap(){
         Iterable<FixData> categoriesAsFix = repo.findAllByTag(35);

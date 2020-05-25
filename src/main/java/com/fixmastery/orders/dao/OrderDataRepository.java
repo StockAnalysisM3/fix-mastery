@@ -7,8 +7,13 @@ import com.fixmastery.orders.model.Trade;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface OrderDataRepository extends CrudRepository<OrderData, Long> {
+
+//    Map<Integer, Map<String, ?>> loadAsModel();
+
     default void saveMessageAsOrderData(Message message){
         //TODO: Implement
     }

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FixDataRepoTest {
 
     @Autowired
-    private CategoryMaps catRepo;
+    private CategoryAdapter catRepo;
 
     @Test
     void orderStatusRepoTest() {

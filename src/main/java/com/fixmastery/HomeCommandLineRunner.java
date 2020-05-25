@@ -1,6 +1,6 @@
 package com.fixmastery;
 
-import com.fixmastery.categories.dao.CategoryMaps;
+import com.fixmastery.categories.dao.CategoryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class HomeCommandLineRunner implements CommandLineRunner {
 
     @Autowired
-    CategoryMaps catRepo;
+    CategoryAdapter catRepo;
 
     // TODO: Create and AutoWire InstrumentRepo
 

@@ -9,18 +9,31 @@ import org.springframework.stereotype.Component;
 import java.util.Iterator;
 
 @Component
-public class OrderDataRepositoryAdapter {
+public class OrderDataToModelsAdapter {
+
+    @Autowired
+    OrderStrategy orderStrategy;
+
+    @Autowired
+    TradeStrategy tradeStrategy;
 
     @Autowired
     private OrderDataRepository orderDataRepository;
 
     public void adapt() {
         Iterator<OrderData> allOrderData = orderDataRepository.findAll().iterator();
-        allOrderData.forEachRemaining(data -> adaptInstance(data));
+        allOrderData.forEachRemaining(data -> {
+            System.out.println(data);
+            adaptInstance(data);
+        });
     }
 
     private void adaptInstance (OrderData data) {
-        String orderMessages = new OrderStrategy(data).getMessage();
-        String tradeMessages = new TradeStrategy(data).getMessage();
+        orderStrategy.strategy(data);
+        orderStrategy.getMessage();
+        tradeStrategy.strategy(data);
+        tradeStrategy.getMessage();
     }
+
+
 }

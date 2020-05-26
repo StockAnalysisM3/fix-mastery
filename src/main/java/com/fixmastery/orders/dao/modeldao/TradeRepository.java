@@ -1,14 +1,14 @@
 package com.fixmastery.orders.dao.modeldao;
 
 import com.fixmastery.orders.model.Trade;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Repository
+@Component
 public class TradeRepository {
     Map<String, Trade> tradeRepo = new HashMap<>();
 

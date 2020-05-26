@@ -1,7 +1,5 @@
 package com.fixmastery.orders.model;
 
-import com.fixmastery.categories.model.OrderStatus;
-import com.fixmastery.categories.model.OrderType;
 import com.fixmastery.categories.model.Side;
 
 import javax.persistence.Id;
@@ -13,17 +11,15 @@ public class Order {
 
     //TODO: Transform into User
     private String clientId;
+    private Integer instrument;
 
-    //TODO: Transform into Instrument
-    private int instrument;
-
-    private OrderStatus orderStatus;
-    private OrderType orderType;
+    private String orderStatusId;
+    private String orderTypeId;
 
     //TODO: Transform into Venue
     private String venue;
 
-    private Side side;
+    private String sideId;
     private Long initialQuantity;
     private Long completedQuantity = 0L;
     private Long pendingQuantity;
@@ -43,26 +39,22 @@ public class Order {
             String id,
             String clientId,
             int instrument,
-            OrderStatus orderStatus,
-            OrderType orderType,
+            String orderStatusId,
+            String orderTypeId,
             String venue,
-            Side side,
-            Long initialQuantity,
-            Long completedQuantity,
-            Long pendingQuantity,
-            BigDecimal initialPrice
+            String sideId,
+            Long initialQuantity
         ) {
         this.id = id;
         this.clientId = clientId;
         this.instrument = instrument;
-        this.orderStatus = orderStatus;
-        this.orderType = orderType;
+        this.orderStatusId = orderStatusId;
+        this.orderTypeId = orderTypeId;
         this.venue = venue;
-        this.side = side;
-        this.initialQuantity = initialQuantity;
-        this.completedQuantity = completedQuantity;
-        this.pendingQuantity = pendingQuantity;
-        this.initialPrice = this.currentAveragePricePerUnit = initialPrice;
+        this.sideId = sideId;
+        this.initialQuantity = this.pendingQuantity = initialQuantity;
+        this.completedQuantity = 0L;
+        this.initialPrice = this.currentAveragePricePerUnit = BigDecimal.ZERO;
     }
 
     public String getId() {
@@ -85,20 +77,20 @@ public class Order {
         this.instrument = instrument;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
+    public String getOrderStatusId() {
+        return orderStatusId;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderStatusId(String orderStatusId) {
+        this.orderStatusId = orderStatusId;
     }
 
-    public OrderType getOrderType() {
-        return orderType;
+    public String getOrderTypeId() {
+        return orderTypeId;
     }
 
-    public void setOrderType(OrderType orderType) {
-        this.orderType = orderType;
+    public void setOrderTypeId(String orderTypeId) {
+        this.orderTypeId = orderTypeId;
     }
 
     public String getVenue() {
@@ -109,12 +101,12 @@ public class Order {
         this.venue = venue;
     }
 
-    public Side getSide() {
-        return side;
+    public String getSideId() {
+        return sideId;
     }
 
-    public void setSide(Side side) {
-        this.side = side;
+    public void setSideId(String sideId) {
+        this.sideId = sideId;
     }
 
     public Long getInitialQuantity() {
@@ -168,16 +160,19 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "  id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", clientId='" + clientId + '\'' +
                 ", instrument=" + instrument +
-                ", orderStatus=" + orderStatus.getName() +
-                ", orderType=" + orderType.getName() +
+                ", orderStatusId='" + orderStatusId + '\'' +
+                ", orderTypeId='" + orderTypeId + '\'' +
                 ", venue='" + venue + '\'' +
-                ", side=" + side.getName()    +
+                ", sideId='" + sideId + '\'' +
                 ", initialQuantity=" + initialQuantity +
                 ", completedQuantity=" + completedQuantity +
-                ", price=" + initialPrice +
+                ", pendingQuantity=" + pendingQuantity +
+                ", initialPrice=" + initialPrice +
+                ", currentAveragePricePerUnit=" + currentAveragePricePerUnit +
+                ", fulfilled=" + fulfilled +
                 '}';
     }
 }

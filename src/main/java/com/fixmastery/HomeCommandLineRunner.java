@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class HomeCommandLineRunner implements CommandLineRunner {
 
-    @Autowired
-    CategoryAdapter catRepo;
-
     // TODO: Create and AutoWire InstrumentRepo
 
 

@@ -1,7 +1,6 @@
 package com.fixmastery.orders.model;
 
-import com.fixmastery.categories.model.OrderStatus;
-import com.fixmastery.categories.model.Side;
+import com.fixmastery.orders.dto.OrderData;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,44 +11,52 @@ public class Trade {
     private LocalDateTime executed = null;
     private Order order;
     private int instrument;
-    private OrderStatus tradeStatus;
-    private Side side;
+    private String tradeStatusId;
+    private String sideId;
     private long quantity;
     private BigDecimal price;
 
     /**
-     * This is the constructor for completed trade
+     * This is the constructor for an impending trade
      */
     public Trade(
             String id,
             LocalDateTime dateTimeStamp,
             Order order,
             int instrument,
-            OrderStatus tradeStatus,
-            Side side,
+            String tradeStatusId,
+            String sideId,
             long quantity
         ) {
         this.id = id;
         this.created = dateTimeStamp;
         this.order = order;
         this.instrument = instrument;
-        this.tradeStatus = tradeStatus;
-        this.side = side;
+        this.tradeStatusId = tradeStatusId;
+        this.sideId = sideId;
         this.quantity = quantity;
         this.price = null;
     }
 
-    public void updateOrder(BigDecimal avgPrice){
+    public void updateOrder(OrderData data){
+        BigDecimal avgPrice = data.getPrice();
 
         this.order.setPendingQuantity(
-            this.order.getPendingQuantity() - this.quantity
+            data.getPendingQuantity()
         );
 
         this.order.setCompletedQuantity(
-            this.order.getCompletedQuantity() + this.quantity
+            data.getCompletedQuantity()
         );
 
         this.order.setCurrentAveragePricePerUnit(avgPrice);
+
+        System.out.println(order);
+    }
+
+    public void executeTrade(OrderData data) {
+        this.executed = data.getDateTimeStamp();
+        this.tradeStatusId = data.getOrderStatus();
     }
 
     public String getId() {
@@ -64,12 +71,12 @@ public class Trade {
         return instrument;
     }
 
-    public OrderStatus getTradeStatus() {
-        return tradeStatus;
+    public String getTradeStatusId() {
+        return tradeStatusId;
     }
 
-    public Side getSide() {
-        return side;
+    public String getSideId() {
+        return sideId;
     }
 
     public long getQuantity() {
@@ -88,8 +95,8 @@ public class Trade {
                 ", executed=" + executed +
                 ", order=" + order +
                 ", instrument='" + instrument + '\'' +
-                ", tradeStatus=" + tradeStatus.getName() +
-                ", side=" + side.getName() +
+                ", tradeStatus=" + tradeStatusId +
+                ", side=" + sideId +
                 ", quantity=" + quantity +
                 ", price=" + price +
                 '}';

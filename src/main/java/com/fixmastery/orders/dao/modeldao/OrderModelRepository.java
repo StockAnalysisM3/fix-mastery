@@ -1,21 +1,18 @@
 package com.fixmastery.orders.dao.modeldao;
 
-import com.fixmastery.orders.dao.OrderDataRepository;
 import com.fixmastery.orders.model.Order;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+@Component
 public class OrderModelRepository {
 
-//    @Autowired
-//    private OrderDataRepository orderDataRepo;
-
-    @Autowired TradeRepository tradeRepo;
+    @Autowired
+    TradeRepository tradeRepo;
 
     Map<String, Order> orderRepo = new HashMap<>();
 

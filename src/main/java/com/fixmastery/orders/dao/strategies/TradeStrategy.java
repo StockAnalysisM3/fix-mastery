@@ -1,12 +1,13 @@
 package com.fixmastery.orders.dao.strategies;
 
-import com.fixmastery.categories.dao.CategoryAdapter;
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.fixmastery.orders.dao.modeldao.TradeRepository;
 import com.fixmastery.orders.dto.OrderData;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TradeStrategy {
 
     @Autowired
@@ -15,26 +16,25 @@ public class TradeStrategy {
     @Autowired
     TradeRepository tradeRepository;
 
-    @Autowired
-    CategoryAdapter categoryAdapter;
-
     private String message;
 
-    public TradeStrategy(OrderData data) {
-        strategy(data);
-    }
+    public TradeStrategy() {}
 
-    private void strategy(OrderData data) {
+    public void strategy(OrderData data) {
+        this.message = "";
         if(
             data.getInstanceId().substring(0,2).equals("te") &&
+            data.getParentId().substring(0,2).equals("om") &&
             data.getCompletedQuantity() == null
         ) {
+            System.out.println("Creating trade");
             createTrade(data);
         } else if(
                 data.getInstanceId().substring(0,2).equals("te") &&
                 data.getParentId().substring(0,2).equals("te")
         ) {
-            executeTrade();
+            System.out.println("Executing trade");
+            executeTrade(data);
         }
     }
 
@@ -44,10 +44,12 @@ public class TradeStrategy {
                 data.getDateTimeStamp(),
                 orderRepository.getOrderById(data.getOrderId()),
                 data.getInstrument(),
-                categoryAdapter.orderStatusMap().get(data.getOrderStatus()),
-                categoryAdapter.sideMap().get(data.getSide()),
+                data.getOrderStatus(),
+                data.getSide(),
                 data.getInitialQuantity()
             );
+
+            System.out.println(newTrade);
 
             tradeRepository.addNewTrade(newTrade);
 
@@ -59,8 +61,16 @@ public class TradeStrategy {
             return newTrade;
         }
 
-        private void executeTrade() {
-            System.out.println("Create Trade Instance");
+        private void executeTrade(OrderData data) {
+            Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
+            System.out.println(executedTrade);
+
+            executedTrade.executeTrade(data);
+
+            // TODO: Abstract to its own messageClass
+            this.message +=
+                    "Trade " + executedTrade.getId() + " has been executed\n" +
+                            executedTrade;
         }
 
     public String getMessage() {

@@ -7,7 +7,9 @@ import com.fixmastery.orders.dto.OrderData;
 import com.fixmastery.orders.model.Order;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderStrategy {
 
     @Autowired
@@ -16,20 +18,16 @@ public class OrderStrategy {
     @Autowired
     TradeRepository tradeRepository;
 
-    @Autowired
-    CategoryAdapter categoryAdapter;
-
     private String message;
 
-    public OrderStrategy(OrderData data) {
-        strategy(data);
-    }
+    public OrderStrategy() {}
 
     /**
      * The order strategy will only contain changes to Order instances
      *      trade changes, including creation of trades by using an order instances will be handled by the Trade strategy class
      */
-    private void strategy(OrderData data) {
+    public void strategy(OrderData data) {
+        this.message = "";
         if(data.getParentId() == null) {
             createNewOrder(data);
         }
@@ -41,20 +39,17 @@ public class OrderStrategy {
 
         private Order createNewOrder(OrderData data) {
             Order order = new Order(
-                data.getOrderId(),
+                data.getInstanceId(),
                 data.getClientId(),
                 data.getInstrument(),
-                categoryAdapter.orderStatusMap().get(data.getOrderStatus()),
-                categoryAdapter.orderTypeMap().get(data.getOrderType()),
+                data.getOrderStatus(),
+                data.getOrderType(),
                 data.getVenue(),
-                categoryAdapter.sideMap().get(data.getSide()),
-                data.getInitialQuantity(),
-                data.getCompletedQuantity(),
-                data.getPendingQuantity(),
-                data.getPrice()
+                data.getSide(),
+                data.getInitialQuantity()
             );
 
-            orderRepository.addNewOrder(order);
+            this.orderRepository.addNewOrder(order);
 
             // TODO: Abstract to its own messageClass
             this.message +=
@@ -73,7 +68,7 @@ public class OrderStrategy {
         private Order updateOrder(OrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getInstanceId());
             Order parentOrder = executedTrade.getOrder();
-            executedTrade.updateOrder(data.getPrice());
+            executedTrade.updateOrder(data);
 
             if(data.getOrderStatus().equals(1)) {
                 completeOrder(parentOrder);

@@ -30,7 +30,11 @@ public class OrderStrategy {
         if(data.getParentId() == null) {
             createNewOrder(data);
         }
-        else if(tradeExistsWithinOrderInstance(data)) {
+        else if(
+            tradeExistsWithinOrderInstance(data) &&
+            data.getParentId().substring(0,2).equals("om") &&
+            data.getCompletedQuantity() != null
+        ) {
             updateOrder(data);
         }
     }
@@ -68,7 +72,7 @@ public class OrderStrategy {
             Order parentOrder = executedTrade.getOrder();
             executedTrade.updateOrder(data);
 
-            if(data.getOrderStatus().equals(1)) {
+            if(data.getOrderStatus().equals("2")) {
                 completeOrder(parentOrder);
             }
 
@@ -82,7 +86,7 @@ public class OrderStrategy {
 
         private void completeOrder(Order order) {
             order.setFulfilled(true);
-            this.message += "Order" + order.getId() + " has been fulfilled";
+            this.message += "Order " + order.getId() + " has been fulfilled\n";
         }
 
     public String getMessage() {

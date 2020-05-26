@@ -27,6 +27,7 @@ public class OrderDataToModelsAdapter {
 
     public void adapt() {
         Iterator<OrderData> allOrderData = orderDataRepository.findAll().iterator();
+
         allOrderData.forEachRemaining(data -> {
             adaptInstance(data);
         });
@@ -34,13 +35,14 @@ public class OrderDataToModelsAdapter {
 
     private void adaptInstance (OrderData data) {
         System.out.println("=====");
-//        System.out.println(data);
+        System.out.println(data);
 
         Message message
             = new Message(data.getId(), data.getDateTimeStamp(), data.getSystemId(), data.getMessage());
 
         orderStrategy.strategy(data);
         message.appendMessage(orderStrategy.getMessage());
+
         tradeStrategy.strategy(data);
         message.appendMessage(tradeStrategy.getMessage());
 

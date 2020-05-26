@@ -5,10 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * Orders - This DTO will be used to
- */
-//TODO: Verification of setMethods
 @Entity
 @Table(name = "Orders")
 public class OrderData {

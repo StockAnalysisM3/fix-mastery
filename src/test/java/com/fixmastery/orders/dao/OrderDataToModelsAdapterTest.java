@@ -1,6 +1,8 @@
 package com.fixmastery.orders.dao;
 
+import com.fixmastery.orders.dao.modeldao.MessageRepository;
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
+import com.google.common.collect.Iterators;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,23 @@ class OrderDataToModelsAdapterTest {
     @Autowired
     private OrderDataToModelsAdapter adapter;
 
+    @Autowired
+    private MessageRepository messageRepository;
+
+    @Autowired
+    private OrderDataRepository dataRepository;
+
     @BeforeEach
     void setUp() {
         adapter.adapt();
     }
 
     @Test
-    void adaptTest() {
-        System.out.println("running initial test");
+    void createdEqualInstancesOfMessagesAsOrderData() {
+        long numOfMessages = Iterators.size(messageRepository.getAll().iterator());
+        long numOfData = dataRepository.count();
+
+        assertEquals(numOfData, numOfMessages, "Every data point should have a message");
     }
 
     @Test

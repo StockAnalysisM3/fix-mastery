@@ -50,23 +50,27 @@ public class TradeStrategy {
 
             tradeRepository.addNewTrade(newTrade);
 
-            // TODO: Abstract to its own messageClass
-            this.message +=
-                    "Trade " + newTrade.getId() + " has been created\n" +
-                            newTrade;
+            this.message += tradeIsCreatedMessage(newTrade);
 
             return newTrade;
         }
+
+            private String tradeIsCreatedMessage(Trade trade) {
+                return "Trade " + trade.getId() + " has been created\n" +
+                    trade;
+            }
 
         private void executeTrade(OrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
             executedTrade.executeTrade(data);
 
-            // TODO: Abstract to its own messageClass
-            this.message +=
-                    "Trade " + executedTrade.getId() + " has been executed\n" +
-                            executedTrade;
+            this.message += tradeIsExecutedMessage(executedTrade);
         }
+
+            private String tradeIsExecutedMessage(Trade trade) {
+                return "Trade " + trade.getId() + " has been executed\n" +
+                    trade;
+            }
 
     public String getMessage() {
         return message;

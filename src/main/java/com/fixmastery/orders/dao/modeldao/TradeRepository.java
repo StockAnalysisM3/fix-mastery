@@ -1,5 +1,6 @@
 package com.fixmastery.orders.dao.modeldao;
 
+import com.fixmastery.orders.dto.OrderData;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.stereotype.Component;
 

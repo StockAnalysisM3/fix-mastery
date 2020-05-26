@@ -16,7 +16,7 @@ public class TradeStrategy {
     @Autowired
     TradeRepository tradeRepository;
 
-    private String message;
+    private String message = "";
 
     public TradeStrategy() {}
 
@@ -27,13 +27,12 @@ public class TradeStrategy {
             data.getParentId().substring(0,2).equals("om") &&
             data.getCompletedQuantity() == null
         ) {
-            System.out.println("Creating trade");
             createTrade(data);
         } else if(
                 data.getInstanceId().substring(0,2).equals("te") &&
-                data.getParentId().substring(0,2).equals("te")
+                data.getParentId().substring(0,2).equals("te") &&
+                data.getCompletedQuantity() != null
         ) {
-            System.out.println("Executing trade");
             executeTrade(data);
         }
     }
@@ -49,8 +48,6 @@ public class TradeStrategy {
                 data.getInitialQuantity()
             );
 
-            System.out.println(newTrade);
-
             tradeRepository.addNewTrade(newTrade);
 
             // TODO: Abstract to its own messageClass
@@ -63,8 +60,6 @@ public class TradeStrategy {
 
         private void executeTrade(OrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
-            System.out.println(executedTrade);
-
             executedTrade.executeTrade(data);
 
             // TODO: Abstract to its own messageClass

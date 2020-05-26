@@ -50,8 +50,6 @@ public class Trade {
         );
 
         this.order.setCurrentAveragePricePerUnit(avgPrice);
-
-        System.out.println(order);
     }
 
     public void executeTrade(OrderData data) {

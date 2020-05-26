@@ -1,6 +1,5 @@
 package com.fixmastery.orders.dao.strategies;
 
-import com.fixmastery.categories.dao.CategoryAdapter;
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.fixmastery.orders.dao.modeldao.TradeRepository;
 import com.fixmastery.orders.dto.OrderData;
@@ -34,7 +33,6 @@ public class OrderStrategy {
         else if(tradeExistsWithinOrderInstance(data)) {
             updateOrder(data);
         }
-        this.message += data.getMessage();
     }
 
         private Order createNewOrder(OrderData data) {
@@ -84,6 +82,7 @@ public class OrderStrategy {
 
         private void completeOrder(Order order) {
             order.setFulfilled(true);
+            this.message += "Order" + order.getId() + " has been fulfilled";
         }
 
     public String getMessage() {

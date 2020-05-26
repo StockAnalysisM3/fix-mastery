@@ -6,10 +6,6 @@ import com.fixmastery.categories.model.Side;
 
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Order {
     @Id
@@ -31,7 +27,6 @@ public class Order {
     private Long initialQuantity;
     private Long completedQuantity = 0L;
     private Long pendingQuantity;
-    private Map<String, Trade> tradeList = new HashMap<>();
 
     /**
      * We will want to keep track of the original bid/ask price
@@ -153,14 +148,6 @@ public class Order {
     public void setPendingQuantity(Long pendingQuantity) {
         this.pendingQuantity = pendingQuantity;
     }
-
-    public Map<String, Trade> getTradeList() {
-        return tradeList;
-    }
-
-//    public void addTrade(Trade trade) {
-//        this.tradeList.put(trade.getId(), trade);
-//    }
 
     public BigDecimal getCurrentAveragePricePerUnit() {
         return currentAveragePricePerUnit;

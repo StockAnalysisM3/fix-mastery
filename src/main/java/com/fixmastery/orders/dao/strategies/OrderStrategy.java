@@ -2,8 +2,10 @@ package com.fixmastery.orders.dao.strategies;
 
 import com.fixmastery.categories.dao.CategoryAdapter;
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
+import com.fixmastery.orders.dao.modeldao.TradeRepository;
 import com.fixmastery.orders.dto.OrderData;
 import com.fixmastery.orders.model.Order;
+import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrderStrategy {
@@ -12,9 +14,12 @@ public class OrderStrategy {
     OrderModelRepository orderRepository;
 
     @Autowired
+    TradeRepository tradeRepository;
+
+    @Autowired
     CategoryAdapter categoryAdapter;
 
-    private Order order;
+    private String message;
 
     public OrderStrategy(OrderData data) {
         strategy(data);
@@ -28,12 +33,13 @@ public class OrderStrategy {
         if(data.getParentId() == null) {
             createNewOrder(data);
         }
-//        else if(tradeExistsInOrder(data)) {
-//            updateOrder(data);
-//        }
+        else if(tradeExistsWithinOrderInstance(data)) {
+            updateOrder(data);
+        }
+        this.message += data.getMessage();
     }
 
-        private void createNewOrder(OrderData data) {
+        private Order createNewOrder(OrderData data) {
             Order order = new Order(
                 data.getOrderId(),
                 data.getClientId(),
@@ -49,23 +55,43 @@ public class OrderStrategy {
             );
 
             orderRepository.addNewOrder(order);
+
+            // TODO: Abstract to its own messageClass
+            this.message +=
+                    "Order " + order.getId() + " has been created\n" +
+                            order;
+
+            return order;
         }
 
-//        private boolean tradeExistsInOrder(OrderData data){
-//            return orderRepository.getOrderById(data.getOrderId()).getTradeList().containsKey(data.getInstanceId());
-//        }
+        private boolean tradeExistsWithinOrderInstance(OrderData data){
+            return orderRepository.doesTradeIdExistInOrderInstance(
+                data.getOrderId(), data.getInstanceId()
+            );
+        }
 
-//        private void updateOrder(OrderData data) {
-//            Order currentOrder =
-//        }
+        private Order updateOrder(OrderData data) {
+            Trade executedTrade = tradeRepository.getTradeById(data.getInstanceId());
+            Order parentOrder = executedTrade.getOrder();
+            executedTrade.updateOrder(data.getPrice());
+
+            if(data.getOrderStatus().equals(1)) {
+                completeOrder(parentOrder);
+            }
+
+            //TODO: abstract to its own messageService class
+            this.message +=
+                    "Order " + parentOrder.getId() + " has been updated\n" +
+                            parentOrder;
+
+            return parentOrder;
+        }
 
         private void completeOrder(Order order) {
             order.setFulfilled(true);
         }
 
-    public Order getOrder() {
-        return order;
+    public String getMessage() {
+        return message;
     }
-
-
 }

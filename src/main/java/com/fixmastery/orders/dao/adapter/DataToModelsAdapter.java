@@ -24,13 +24,20 @@ public class DataToModelsAdapter {
     @Autowired
     private RawOrderDataRepository rawOrderDataRepository;
 
+    //TODO: Autowire ExecutionStrategy
+
     public void adapt() {
         Iterator<RawOrderData> allOrderData = rawOrderDataRepository.findAll().iterator();
 
         allOrderData.forEachRemaining(data -> adaptInstance(data));
     }
 
+    /**
+     * TODO: Place Execution Strategy
+     */
     private void adaptInstance (RawOrderData data) {
+        System.out.println("===============================================");
+        System.out.println(data);
         Message message
             = new Message(data.getId(), data.getDateTimeStamp(), data.getSystemId(), data.getMessage());
 
@@ -40,8 +47,11 @@ public class DataToModelsAdapter {
         tradeStrategy.strategy(data);
         message.appendMessage(tradeStrategy.getMessage());
 
+        // place executionStrategy here
+
+        System.out.println(message.getFullMessage());
+
         messageRepository.addNewMessage(message);
     }
-
 
 }

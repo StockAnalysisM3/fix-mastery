@@ -27,7 +27,7 @@ public class TradeStrategy {
             data.getParentId().substring(0,2).equals("om") &&
             data.getCompletedQuantity() == null
         ) {
-            createTrade(data);
+            createTradeDirectlyFromOrder(data);
         } else if(
                 data.getInstanceId().substring(0,2).equals("te") &&
                 data.getParentId().substring(0,2).equals("te") &&
@@ -35,9 +35,10 @@ public class TradeStrategy {
         ) {
             executeTrade(data);
         }
+        // place one for updateParentTrade
     }
 
-        private Trade createTrade(RawOrderData data) {
+        private Trade createTradeDirectlyFromOrder(RawOrderData data) {
             Trade newTrade = new Trade(
                 data.getInstanceId(),
                 data.getDateTimeStamp(),
@@ -64,12 +65,12 @@ public class TradeStrategy {
             Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
             executedTrade.executeTrade(data);
 
-            this.message += tradeIsExecutedMessage(executedTrade);
+            this.message += tradeIsExecutedMessage(data);
         }
 
-            private String tradeIsExecutedMessage(Trade trade) {
-                return "Trade " + trade.getId() + " has been executed\n" +
-                    trade;
+            private String tradeIsExecutedMessage(RawOrderData data) {
+                return "Trade " + data.getParentId() + " has been executed\n" +
+                    "Execution { Id: " + data.getInstanceId() + " Instrument: " + data.getInstrument() +" Quantity: " + data.getInitialQuantity() + " Price: " + data.getPrice() + "}";
             }
 
     public String getMessage() {

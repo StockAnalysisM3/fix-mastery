@@ -66,7 +66,7 @@ public class OrderStrategy {
         private Order updateOrder(RawOrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getInstanceId());
             Order parentOrder = executedTrade.getOrder();
-            executedTrade.updateOrder(data);
+            executedTrade.updateParentOrder(data);
 
             if(data.getOrderStatus().equals("2")) {
                 completeOrder(parentOrder);

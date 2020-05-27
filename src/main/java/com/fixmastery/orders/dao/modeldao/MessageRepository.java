@@ -21,6 +21,10 @@ public class MessageRepository {
         return messageRepo.values();
     }
 
+    public Iterable<Long> getAllIds() {
+        return messageRepo.keySet();
+    }
+
     public Iterable<Message> getAllBySystem(String system) {
         Collection<Message> allMessages = messageRepo.values();
         Iterable<Message> messagesOfSystem = allMessages

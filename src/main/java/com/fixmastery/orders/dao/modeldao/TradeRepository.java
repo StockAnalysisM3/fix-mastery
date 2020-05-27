@@ -20,6 +20,10 @@ public class TradeRepository {
         return tradeRepo.values();
     }
 
+    public Iterable<String> getAllIds() {
+        return tradeRepo.keySet();
+    }
+
     public Trade getTradeById(String id){
         return tradeRepo.get(id);
     }

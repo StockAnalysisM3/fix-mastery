@@ -1,8 +1,8 @@
 package com.fixmastery.orders.controller;
 
 import com.fixmastery.errorshandlers.MapValidationErrorsService;
-import com.fixmastery.orders.model.Order;
-import com.fixmastery.orders.service.OrderService;
+import com.fixmastery.orders.model.Trade;
+import com.fixmastery.orders.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,51 +13,50 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/orders/")
-public class OrderController {
+@RequestMapping("/api/trades/")
+public class TradeController {
 
     @Autowired
-    private OrderService orderService;
+    private TradeService tradeService;
 
     @Autowired
     private MapValidationErrorsService mapValidationErrorsService;
 
     @GetMapping("/size")
-    public ResponseEntity<?> getOrdersSize() {
-        long numOfOrders = orderService.getSize();
-        return new ResponseEntity<Long>(numOfOrders, HttpStatus.OK);
+    public ResponseEntity<?> getTradesSize() {
+        long numOfTrades = tradeService.getTradesSize();
+        return new ResponseEntity<Long>(numOfTrades, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllOrders() {
-        Iterable<Order> allOrders = orderService.getAllOrders();
-        return new ResponseEntity<Iterable<Order>>(allOrders, HttpStatus.OK);
+    public ResponseEntity<?> getAllTrades() {
+        Iterable<Trade> allTrades = tradeService.getAllTrades();
+        return new ResponseEntity<Iterable<Trade>>(allTrades, HttpStatus.OK);
     }
 
     @GetMapping("/idSet")
     public ResponseEntity<?> getAllOrderIds() {
-        Iterable<String> allIds = orderService.getAllOrderIds();
+        Iterable<String> allIds = tradeService.getAllTradeIds();
         return new ResponseEntity<Iterable<String>>(allIds, HttpStatus.OK);
     }
 
     @GetMapping("/byId/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable String id) {
-        Optional<Order> order = orderService.getOrderById(id);
-        return new ResponseEntity<Optional<Order>>(order, HttpStatus.OK);
+        Optional<Trade> trade = tradeService.getTradeById(id);
+        return new ResponseEntity<Optional<Trade>>(trade, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> addOrUpdateOrder(@RequestBody Order order, BindingResult result) {
+    public ResponseEntity<?> addOrUpdateTrade(@RequestBody Trade trade, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorsService.MapValidationErrorsService(result);
 
         if(errorMap != null) {
             return errorMap;
         }
 
-        orderService.addOrUpdateNewOrder(order);
+        tradeService.addOrUpdateTrade(trade);
 
-        return new ResponseEntity<Order>(order, HttpStatus.OK);
+        return new ResponseEntity<Trade>(trade, HttpStatus.OK);
     }
-
 
 }

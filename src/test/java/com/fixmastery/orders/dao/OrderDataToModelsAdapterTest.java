@@ -1,7 +1,6 @@
 package com.fixmastery.orders.dao;
 
 import com.fixmastery.orders.dao.modeldao.MessageRepository;
-import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.google.common.collect.Iterators;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

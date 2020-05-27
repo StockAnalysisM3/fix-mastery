@@ -1,7 +1,6 @@
 package com.fixmastery.orders.dao.modeldao;
 
 import com.fixmastery.orders.model.Order;
-import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

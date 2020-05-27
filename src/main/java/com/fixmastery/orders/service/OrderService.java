@@ -6,6 +6,8 @@ import com.google.common.collect.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class OrderService {
     @Autowired
@@ -15,8 +17,8 @@ public class OrderService {
         return Iterators.size(orderRepo.getAll().iterator());
     }
 
-    public Order getOrderById(String id) {
-        return orderRepo.getOrderById(id);
+    public Optional<Order> getOrderById(String id) {
+        return Optional.ofNullable(orderRepo.getOrderById(id));
     }
 
     public Iterable<Order> getAllOrders() {

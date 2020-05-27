@@ -19,6 +19,12 @@ public class CategoryController {
     private CategoryService catService;
 
 
+    @GetMapping("/size")
+    public ResponseEntity<?> getOrderStatusesSize() {
+        long numOfCategories = catService.getFixSize();
+        return new ResponseEntity<Long>(numOfCategories, HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<?> getAllInFix() {
         Iterable<FixData> allFix = catService.getAllAsFix();
@@ -29,12 +35,6 @@ public class CategoryController {
     public ResponseEntity<?> getOrderStatuses() {
         Iterable<OrderStatus> allOrderStatuses = catService.getAllOrderStatuses();
         return new ResponseEntity<Iterable<OrderStatus>>(allOrderStatuses, HttpStatus.OK);
-    }
-
-    @GetMapping("/size")
-    public ResponseEntity<?> getOrderStatusesSize() {
-        long numOfCategories = catService.getFixSize();
-        return new ResponseEntity<Long>(numOfCategories, HttpStatus.OK);
     }
 
     @GetMapping("/messagetype")

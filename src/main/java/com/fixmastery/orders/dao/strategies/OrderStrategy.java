@@ -21,10 +21,6 @@ public class OrderStrategy {
 
     public OrderStrategy() {}
 
-    /**
-     * The order strategy will only contain changes to Order instances
-     *      trade changes, including creation of trades by using an order instances will be handled by the Trade strategy class
-     */
     public void strategy(OrderData data) {
         this.message = "";
         if(data.getParentId() == null) {

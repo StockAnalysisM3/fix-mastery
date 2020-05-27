@@ -20,6 +20,10 @@ public class OrderModelRepository {
         return orderRepo.values();
     }
 
+    public Iterable<String> getAllIds() {
+        return orderRepo.keySet();
+    }
+
     public Order getOrderById(String id) {
         return orderRepo.get(id);
     }
@@ -28,17 +32,11 @@ public class OrderModelRepository {
         orderRepo.put(order.getId(), order);
     }
 
-    public void setOrderRepo(Map<String, Order> orderRepo) {
-        this.orderRepo = orderRepo;
-    }
-
     public boolean doesTradeIdExistInOrderInstance(String orderId, String tradeId) {
         return tradeRepo.doesTradeIdExistInOrderInstance(orderId, tradeId);
     }
 
-    public Iterable<Trade> getAllByOrderId(String orderId) {
-        return tradeRepo.getAllByOrderId(orderId);
-    }
+
 }
 
 

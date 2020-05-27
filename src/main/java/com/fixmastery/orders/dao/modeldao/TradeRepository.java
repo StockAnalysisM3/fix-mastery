@@ -1,6 +1,5 @@
 package com.fixmastery.orders.dao.modeldao;
 
-import com.fixmastery.orders.dto.OrderData;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.stereotype.Component;
 
@@ -21,15 +20,6 @@ public class TradeRepository {
         return tradeRepo.values();
     }
 
-    public Iterable<Trade> getAllByOrderId(String orderId) {
-        Collection<Trade> allTrades = tradeRepo.values();
-        Iterable<Trade> tradesOfOrder = allTrades
-            .stream()
-            .filter(trade -> trade.getOrder().getId().equals(orderId))
-            .collect(Collectors.toList());
-        return tradesOfOrder;
-    }
-
     public Trade getTradeById(String id){
         return tradeRepo.get(id);
     }
@@ -48,4 +38,13 @@ public class TradeRepository {
         private boolean doesOrderIDParamMatchWithTradeOrder(String orderId, String tradeId) {
             return getTradeById(tradeId).getOrder().getId().equals(orderId);
         }
+
+    public Iterable<Trade> getAllByOrderId(String orderId) {
+        Collection<Trade> allTrades = tradeRepo.values();
+        Iterable<Trade> tradesOfOrder = allTrades
+            .stream()
+            .filter(trade -> trade.getOrder().getId().equals(orderId))
+            .collect(Collectors.toList());
+        return tradesOfOrder;
+    }
 }

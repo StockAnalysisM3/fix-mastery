@@ -47,7 +47,7 @@ public class DataToModelsAdapter {
         tradeStrategy.strategy(data);
         message.appendMessage(tradeStrategy.getMessage());
 
-        // place executionStrategy here
+        //TODO: place executionStrategy here
 
         System.out.println(message.getFullMessage());
 

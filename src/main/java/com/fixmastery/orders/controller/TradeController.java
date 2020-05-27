@@ -34,14 +34,14 @@ public class TradeController {
         return new ResponseEntity<Iterable<Trade>>(allTrades, HttpStatus.OK);
     }
 
-    @GetMapping("/idSet")
-    public ResponseEntity<?> getAllOrderIds() {
+    @GetMapping("/idset")
+    public ResponseEntity<?> getAllTradeIds() {
         Iterable<String> allIds = tradeService.getAllTradeIds();
         return new ResponseEntity<Iterable<String>>(allIds, HttpStatus.OK);
     }
 
-    @GetMapping("/byId/{id}")
-    public ResponseEntity<?> getOrderById(@PathVariable String id) {
+    @GetMapping("/byid/{id}")
+    public ResponseEntity<?> getTradeById(@PathVariable String id) {
         Optional<Trade> trade = tradeService.getTradeById(id);
         return new ResponseEntity<Optional<Trade>>(trade, HttpStatus.OK);
     }

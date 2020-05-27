@@ -34,13 +34,13 @@ public class OrderController {
         return new ResponseEntity<Iterable<Order>>(allOrders, HttpStatus.OK);
     }
 
-    @GetMapping("/idSet")
+    @GetMapping("/idset")
     public ResponseEntity<?> getAllOrderIds() {
         Iterable<String> allIds = orderService.getAllOrderIds();
         return new ResponseEntity<Iterable<String>>(allIds, HttpStatus.OK);
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/byid/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable String id) {
         Optional<Order> order = orderService.getOrderById(id);
         return new ResponseEntity<Optional<Order>>(order, HttpStatus.OK);

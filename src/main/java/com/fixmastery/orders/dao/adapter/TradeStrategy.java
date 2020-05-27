@@ -1,8 +1,8 @@
-package com.fixmastery.orders.dao.strategies;
+package com.fixmastery.orders.dao.adapter;
 
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.fixmastery.orders.dao.modeldao.TradeRepository;
-import com.fixmastery.orders.dto.OrderData;
+import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class TradeStrategy {
 
     public TradeStrategy() {}
 
-    public void strategy(OrderData data) {
+    public void strategy(RawOrderData data) {
         this.message = "";
         if(
             data.getInstanceId().substring(0,2).equals("te") &&
@@ -37,7 +37,7 @@ public class TradeStrategy {
         }
     }
 
-        private Trade createTrade(OrderData data) {
+        private Trade createTrade(RawOrderData data) {
             Trade newTrade = new Trade(
                 data.getInstanceId(),
                 data.getDateTimeStamp(),
@@ -60,7 +60,7 @@ public class TradeStrategy {
                     trade;
             }
 
-        private void executeTrade(OrderData data) {
+        private void executeTrade(RawOrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
             executedTrade.executeTrade(data);
 

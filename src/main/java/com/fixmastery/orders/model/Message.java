@@ -39,10 +39,6 @@ public class Message {
         return message;
     }
 
-    public String getMessageOnly() {
-        return message;
-    }
-
     public String getFullMessage() {
         return system + ": [" + dateTimeStamp + "] " + message;
     }

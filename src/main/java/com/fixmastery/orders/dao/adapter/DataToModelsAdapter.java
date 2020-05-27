@@ -1,0 +1,47 @@
+package com.fixmastery.orders.dao.adapter;
+
+import com.fixmastery.orders.dao.RawOrderDataRepository;
+import com.fixmastery.orders.dao.modeldao.MessageRepository;
+import com.fixmastery.orders.dto.RawOrderData;
+import com.fixmastery.orders.model.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Iterator;
+
+@Component
+public class DataToModelsAdapter {
+
+    @Autowired
+    private OrderStrategy orderStrategy;
+
+    @Autowired
+    private TradeStrategy tradeStrategy;
+
+    @Autowired
+    private MessageRepository messageRepository;
+
+    @Autowired
+    private RawOrderDataRepository rawOrderDataRepository;
+
+    public void adapt() {
+        Iterator<RawOrderData> allOrderData = rawOrderDataRepository.findAll().iterator();
+
+        allOrderData.forEachRemaining(data -> adaptInstance(data));
+    }
+
+    private void adaptInstance (RawOrderData data) {
+        Message message
+            = new Message(data.getId(), data.getDateTimeStamp(), data.getSystemId(), data.getMessage());
+
+        orderStrategy.strategy(data);
+        message.appendMessage(orderStrategy.getMessage());
+
+        tradeStrategy.strategy(data);
+        message.appendMessage(tradeStrategy.getMessage());
+
+        messageRepository.addNewMessage(message);
+    }
+
+
+}

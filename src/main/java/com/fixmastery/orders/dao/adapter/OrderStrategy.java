@@ -1,8 +1,8 @@
-package com.fixmastery.orders.dao.strategies;
+package com.fixmastery.orders.dao.adapter;
 
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.fixmastery.orders.dao.modeldao.TradeRepository;
-import com.fixmastery.orders.dto.OrderData;
+import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.Order;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class OrderStrategy {
 
     public OrderStrategy() {}
 
-    public void strategy(OrderData data) {
+    public void strategy(RawOrderData data) {
         this.message = "";
         if(data.getParentId() == null) {
             createNewOrder(data);
@@ -35,7 +35,7 @@ public class OrderStrategy {
         }
     }
 
-        private Order createNewOrder(OrderData data) {
+        private Order createNewOrder(RawOrderData data) {
             Order order = new Order(
                 data.getInstanceId(),
                 data.getClientId(),
@@ -57,13 +57,13 @@ public class OrderStrategy {
             return order;
         }
 
-        private boolean tradeExistsWithinOrderInstance(OrderData data){
+        private boolean tradeExistsWithinOrderInstance(RawOrderData data){
             return orderRepository.doesTradeIdExistInOrderInstance(
                 data.getOrderId(), data.getInstanceId()
             );
         }
 
-        private Order updateOrder(OrderData data) {
+        private Order updateOrder(RawOrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getInstanceId());
             Order parentOrder = executedTrade.getOrder();
             executedTrade.updateOrder(data);

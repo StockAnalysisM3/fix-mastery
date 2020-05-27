@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Orders")
-public class OrderData {
+public class RawOrderData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,7 +69,7 @@ public class OrderData {
     @Column(name = "descr")
     private String message;
 
-    public OrderData() {
+    public RawOrderData() {
     }
 
     public long getId() {

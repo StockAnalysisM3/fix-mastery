@@ -1,8 +1,8 @@
 package com.fixmastery.categories.service;
 
 import com.fixmastery.categories.dao.CategoryAdapter;
-import com.fixmastery.categories.dao.FixDataRepository;
-import com.fixmastery.categories.dto.FixData;
+import com.fixmastery.categories.dao.RawFixDataRepository;
+import com.fixmastery.categories.dto.RawFixData;
 import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryService {
     @Autowired
-    private FixDataRepository fixRepo;
+    private RawFixDataRepository fixRepo;
 
     @Autowired
     private CategoryAdapter catMaps;
 
-    public Iterable<FixData> getAllAsFix() {
+    public Iterable<RawFixData> getAllAsFix() {
         return fixRepo.findAll();
     }
 

@@ -1,6 +1,6 @@
 package com.fixmastery.orders.model;
 
-import com.fixmastery.orders.dto.OrderData;
+import com.fixmastery.orders.dto.RawOrderData;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,7 +38,7 @@ public class Trade {
         this.price = null;
     }
 
-    public void updateOrder(OrderData data){
+    public void updateOrder(RawOrderData data){
         BigDecimal avgPrice = data.getPrice();
 
         this.order.setPendingQuantity(
@@ -52,7 +52,7 @@ public class Trade {
         this.order.setCurrentAveragePricePerUnit(avgPrice);
     }
 
-    public void executeTrade(OrderData data) {
+    public void executeTrade(RawOrderData data) {
         this.executed = data.getDateTimeStamp();
         this.tradeStatusId = data.getOrderStatus();
     }

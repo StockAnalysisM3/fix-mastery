@@ -1,28 +1,24 @@
 package com.fixmastery.orders.dao;
 
-import com.fixmastery.orders.dto.OrderData;
+import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.Message;
 import com.fixmastery.orders.model.Order;
 import com.fixmastery.orders.model.Trade;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
-
 @Repository
-public interface OrderDataRepository extends CrudRepository<OrderData, Long> {
+public interface RawOrderDataRepository extends CrudRepository<RawOrderData, Long> {
 
-//    Map<Integer, Map<String, ?>> loadAsModel();
-
-    default void saveMessageAsOrderData(Message message){
+    default void saveMessageRawAsOrderData(Message message){
         //TODO: Implement as phase2
     }
 
-    default void saveTradeAsOrderData(Trade trade) {
+    default void saveTradeRawAsOrderData(Trade trade) {
         //TODO: Implement as phase2
     }
 
-    default void saveOrderAsOrderData(Order order) {
+    default void saveOrderRawAsOrderData(Order order) {
         //TODO: Implement as phase2
     }
 

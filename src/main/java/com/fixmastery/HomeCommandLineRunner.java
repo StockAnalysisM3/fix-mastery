@@ -1,6 +1,6 @@
 package com.fixmastery;
 
-import com.fixmastery.orders.dao.OrderDataToModelsAdapter;
+import com.fixmastery.orders.dao.adapter.DataToModelsAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class HomeCommandLineRunner implements CommandLineRunner {
 
     @Autowired
-    private OrderDataToModelsAdapter orderTradeMessageAdapter;
+    private DataToModelsAdapter orderTradeMessageAdapter;
 
     @Override
     public void run(String... args) throws Exception {

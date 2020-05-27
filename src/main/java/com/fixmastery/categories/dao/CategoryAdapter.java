@@ -1,6 +1,6 @@
 package com.fixmastery.categories.dao;
 
-import com.fixmastery.categories.dto.FixData;
+import com.fixmastery.categories.dto.RawFixData;
 import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
@@ -15,11 +15,11 @@ import java.util.Map;
 @Component
 public class CategoryAdapter {
     @Autowired
-    private FixDataRepository repo;
+    private RawFixDataRepository repo;
 
     public Map<String, MessageType> messageTypeMap(){
-        Iterable<FixData> categoriesAsFix = repo.findAllByTag(35);
-        Iterator<FixData> fixIterator = categoriesAsFix.iterator();
+        Iterable<RawFixData> categoriesAsFix = repo.findAllByTag(35);
+        Iterator<RawFixData> fixIterator = categoriesAsFix.iterator();
         Map<String, MessageType> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(
@@ -31,8 +31,8 @@ public class CategoryAdapter {
     };
 
     public Map<String, OrderStatus> orderStatusMap(){
-        Iterable<FixData> categoriesAsFix = repo.findAllByTag(39);
-        Iterator<FixData> fixIterator = categoriesAsFix.iterator();
+        Iterable<RawFixData> categoriesAsFix = repo.findAllByTag(39);
+        Iterator<RawFixData> fixIterator = categoriesAsFix.iterator();
         Map<String, OrderStatus> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(
@@ -43,8 +43,8 @@ public class CategoryAdapter {
     };
 
     public Map<String, OrderType> orderTypeMap(){
-        Iterable<FixData> allOrderStatusesAsFix = repo.findAllByTag(40);
-        Iterator<FixData> fixIterator = allOrderStatusesAsFix.iterator();
+        Iterable<RawFixData> allOrderStatusesAsFix = repo.findAllByTag(40);
+        Iterator<RawFixData> fixIterator = allOrderStatusesAsFix.iterator();
         Map<String, OrderType> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(
@@ -55,8 +55,8 @@ public class CategoryAdapter {
     };
 
     public Map<String, Side> sideMap(){
-        Iterable<FixData> categoriesAsFix = repo.findAllByTag(54);
-        Iterator<FixData> fixIterator = categoriesAsFix.iterator();
+        Iterable<RawFixData> categoriesAsFix = repo.findAllByTag(54);
+        Iterator<RawFixData> fixIterator = categoriesAsFix.iterator();
         Map<String, Side> repo = new HashMap<>();
 
         fixIterator.forEachRemaining(fix -> repo.put(

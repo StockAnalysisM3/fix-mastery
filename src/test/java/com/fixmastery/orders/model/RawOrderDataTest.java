@@ -1,7 +1,7 @@
 package com.fixmastery.orders.model;
 
-import com.fixmastery.orders.dao.OrderDataRepository;
-import com.fixmastery.orders.dto.OrderData;
+import com.fixmastery.orders.dao.RawOrderDataRepository;
+import com.fixmastery.orders.dto.RawOrderData;
 import com.google.common.collect.Iterators;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,30 +15,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class OrderDataTest {
+class RawOrderDataTest {
 
     @Autowired
-    private OrderDataRepository orderDataRepository;
+    private RawOrderDataRepository rawOrderDataRepository;
 
     @BeforeEach
     void setUp() {
-        orderDataRepository.findAll().iterator().forEachRemaining(order -> System.out.println(order));
+        rawOrderDataRepository.findAll().iterator().forEachRemaining(order -> System.out.println(order));
     }
 
     @Test
-    void successfulDataAccessTest() {
-        Iterator<OrderData> allOrders = orderDataRepository.findAll().iterator();
+    void loadAllMessagesTest() {
+        Iterator<RawOrderData> allOrders = rawOrderDataRepository.findAll().iterator();
         int numOfOrders = Iterators.size(allOrders);
 
         assertEquals(75, numOfOrders, "There should be 75 initial orders");
     }
 
-//    @Test
-//    void getDatetimestamp() {
-//
-//    }
+    @Test
+    void loadAllTradesTest() {
 
-//    @Test
-//    void setDatetimestamp() {
-//    }
+    }
+
+    @Test
+    void loadAllOrdersTest() {
+
+    }
 }

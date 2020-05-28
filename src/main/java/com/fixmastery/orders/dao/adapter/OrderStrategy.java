@@ -24,7 +24,9 @@ public class OrderStrategy {
     public void strategy(RawOrderData data) {
         this.message = "";
         if(data.getParentId() == null) {
+
             createNewOrderFromOrderData(data);
+
         }
         else if(
             tradeExistsWithinOrderInstance(data) &&

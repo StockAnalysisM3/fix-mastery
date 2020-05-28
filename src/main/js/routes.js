@@ -19,7 +19,7 @@ class Routes extends Component {
     // console.log(this.props.match.params.mode);
     return (
       <Switch>
-        <Route path="/messages/:mode" component={MessagesTable} />
+        <Route path="/messages" component={MessagesTable} />
         <Route path="/" component={Welcome} />
       </Switch>
     )

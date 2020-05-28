@@ -25,12 +25,8 @@ public class OrderModelRepository {
         Order newOrder = new Order(
                 data.getInstanceId(),
                 data.getClientId(),
-                data.getInstrument(),
                 data.getOrderStatus(),
-                data.getOrderType(),
-                data.getVenue(),
-                data.getSide(),
-                data.getInitialQuantity()
+                data.getVenue()
         );
 
         addNewOrder(newOrder);

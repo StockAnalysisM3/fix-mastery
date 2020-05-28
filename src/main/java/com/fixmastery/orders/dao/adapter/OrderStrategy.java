@@ -71,7 +71,7 @@ public class OrderStrategy {
             }
 
         private void completeOrder(Order order) {
-            order.setFulfilled(true);
+            order.fulfillOrder();
             this.message += "\nOrder " + order.getId() + " has been fulfilled\n";
         }
 

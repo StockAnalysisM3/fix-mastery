@@ -38,17 +38,9 @@ public class Trade {
     }
 
     public void updateParentOrder(RawOrderData data){
-        BigDecimal avgPrice = data.getPrice();
-
-        this.order.setPendingQuantity(
-            data.getPendingQuantity()
+        this.order.setOrderStatusId(
+            data.getOrderStatus()
         );
-
-        this.order.setCompletedQuantity(
-            data.getCompletedQuantity()
-        );
-
-        this.order.setCurrentAveragePricePerUnit(avgPrice);
     }
 
     public void executeTrade(RawOrderData data) {

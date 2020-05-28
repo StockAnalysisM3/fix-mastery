@@ -1,9 +1,7 @@
 package com.fixmastery.instrument.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table (name = "Instrument")
@@ -12,14 +10,29 @@ public class InstrumentData {
     @GeneratedValue
     private int Id;
 
-
+    @Column(name ="instrument")
+    @NotNull
     private String instrument;
+
+    @Column(name ="ric")
     private String ric;
+
+    @Column(name ="isin")
     private String isin;
+
+    @Column(name ="sedol")
     private String sedol;
+
+    @Column(name ="cusip")
     private String cusip;
+
+    @Column(name ="bbid")
     private String bbid;
+
+    @Column(name ="mic")
     private String mic;
+
+    @Column(name ="name")
     private String name;
 
     public InstrumentData(){}

@@ -4,6 +4,7 @@ import com.fixmastery.orders.model.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,6 +21,10 @@ public class MessageRepository {
         return messageRepo.values();
     }
 
+    public Iterable<Long> getAllIds() {
+        return messageRepo.keySet();
+    }
+
     public Iterable<Message> getAllBySystem(String system) {
         Collection<Message> allMessages = messageRepo.values();
         Iterable<Message> messagesOfSystem = allMessages
@@ -27,6 +32,15 @@ public class MessageRepository {
             .filter(message -> message.getSystem().equals(system))
             .collect(Collectors.toList());
         return messagesOfSystem;
+    }
+
+    public Iterable<Message> getAllMessagesSortedByDate() {
+        Collection<Message> allMessages = messageRepo.values();
+        Iterable<Message> sortedMessages = allMessages
+            .stream()
+            .sorted(Comparator.comparing(Message::getDateTimeStamp))
+            .collect(Collectors.toList());
+        return sortedMessages;
     }
 
     public Message getMessageById(Long id) {

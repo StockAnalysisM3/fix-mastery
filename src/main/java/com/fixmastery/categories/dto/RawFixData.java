@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Fix")
-public class FixData {
+public class RawFixData {
     @Id
     @GeneratedValue
     private int Id;
@@ -17,7 +17,7 @@ public class FixData {
     private String value;
     private String descr;
 
-    public FixData() {
+    public RawFixData() {
     }
 
     public int getId() {

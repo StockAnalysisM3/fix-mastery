@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class FixDataRepoTest {
+class RawFixDataRepoTest {
 
     @Autowired
     private CategoryAdapter catRepo;

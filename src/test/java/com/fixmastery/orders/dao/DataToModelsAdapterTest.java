@@ -1,7 +1,7 @@
 package com.fixmastery.orders.dao;
 
+import com.fixmastery.orders.dao.adapter.DataToModelsAdapter;
 import com.fixmastery.orders.dao.modeldao.MessageRepository;
-import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.google.common.collect.Iterators;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,16 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class OrderDataToModelsAdapterTest {
+class DataToModelsAdapterTest {
 
     @Autowired
-    private OrderDataToModelsAdapter adapter;
+    private DataToModelsAdapter adapter;
 
     @Autowired
     private MessageRepository messageRepository;
 
     @Autowired
-    private OrderDataRepository dataRepository;
+    private RawOrderDataRepository dataRepository;
 
     @BeforeEach
     void setUp() {

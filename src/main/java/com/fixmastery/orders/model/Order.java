@@ -1,24 +1,16 @@
 package com.fixmastery.orders.model;
 
-import com.fixmastery.categories.model.Side;
-
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
 public class Order {
     @Id
     private String id; // orderId
-
-    //TODO: Transform into User
     private String clientId;
     private Integer instrument;
-
     private String orderStatusId;
     private String orderTypeId;
-
-    //TODO: Transform into Venue
     private String venue;
-
     private String sideId;
     private Long initialQuantity;
     private Long completedQuantity = 0L;

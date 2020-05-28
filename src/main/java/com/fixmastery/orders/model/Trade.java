@@ -1,6 +1,6 @@
 package com.fixmastery.orders.model;
 
-import com.fixmastery.orders.dto.OrderData;
+import com.fixmastery.orders.dto.RawOrderData;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,14 +11,13 @@ public class Trade {
     private LocalDateTime executed = null;
     private Order order;
     private int instrument;
-    private String tradeStatusId;
+    private String tradeStatusId = "0";
     private String sideId;
-    private long quantity;
+    private long targetQuantity;
+    private long completedQuantity;
     private BigDecimal price;
+    private String tradeParentId = null;
 
-    /**
-     * This is the constructor for an impending trade
-     */
     public Trade(
             String id,
             LocalDateTime dateTimeStamp,
@@ -26,7 +25,7 @@ public class Trade {
             int instrument,
             String tradeStatusId,
             String sideId,
-            long quantity
+            long targetQuantity
         ) {
         this.id = id;
         this.created = dateTimeStamp;
@@ -34,11 +33,11 @@ public class Trade {
         this.instrument = instrument;
         this.tradeStatusId = tradeStatusId;
         this.sideId = sideId;
-        this.quantity = quantity;
+        this.targetQuantity = targetQuantity;
         this.price = null;
     }
 
-    public void updateOrder(OrderData data){
+    public void updateParentOrder(RawOrderData data){
         BigDecimal avgPrice = data.getPrice();
 
         this.order.setPendingQuantity(
@@ -52,7 +51,7 @@ public class Trade {
         this.order.setCurrentAveragePricePerUnit(avgPrice);
     }
 
-    public void executeTrade(OrderData data) {
+    public void executeTrade(RawOrderData data) {
         this.executed = data.getDateTimeStamp();
         this.tradeStatusId = data.getOrderStatus();
     }
@@ -77,12 +76,24 @@ public class Trade {
         return sideId;
     }
 
-    public long getQuantity() {
-        return quantity;
+    public long getTargetQuantity() {
+        return targetQuantity;
     }
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public String getTradeParentId() {
+        return tradeParentId;
+    }
+
+    public long getCompletedQuantity() {
+        return completedQuantity;
+    }
+
+    public void setCompletedQuantity(long completedQuantity) {
+        this.completedQuantity = completedQuantity;
     }
 
     @Override
@@ -95,7 +106,7 @@ public class Trade {
                 ", instrument='" + instrument + '\'' +
                 ", tradeStatus=" + tradeStatusId +
                 ", side=" + sideId +
-                ", quantity=" + quantity +
+                ", quantity=" + targetQuantity +
                 ", price=" + price +
                 '}';
     }

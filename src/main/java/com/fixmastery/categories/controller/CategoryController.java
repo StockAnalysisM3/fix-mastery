@@ -1,6 +1,6 @@
 package com.fixmastery.categories.controller;
 
-import com.fixmastery.categories.dto.FixData;
+import com.fixmastery.categories.dto.RawFixData;
 import com.fixmastery.categories.model.MessageType;
 import com.fixmastery.categories.model.OrderStatus;
 import com.fixmastery.categories.model.OrderType;
@@ -19,22 +19,22 @@ public class CategoryController {
     private CategoryService catService;
 
 
+    @GetMapping("/size")
+    public ResponseEntity<?> getOrderStatusesSize() {
+        long numOfCategories = catService.getFixSize();
+        return new ResponseEntity<Long>(numOfCategories, HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<?> getAllInFix() {
-        Iterable<FixData> allFix = catService.getAllAsFix();
-        return new ResponseEntity<Iterable<FixData>>(allFix, HttpStatus.OK);
+        Iterable<RawFixData> allFix = catService.getAllAsFix();
+        return new ResponseEntity<Iterable<RawFixData>>(allFix, HttpStatus.OK);
     }
 
     @GetMapping("/orderstatus")
     public ResponseEntity<?> getOrderStatuses() {
         Iterable<OrderStatus> allOrderStatuses = catService.getAllOrderStatuses();
         return new ResponseEntity<Iterable<OrderStatus>>(allOrderStatuses, HttpStatus.OK);
-    }
-
-    @GetMapping("/size")
-    public ResponseEntity<?> getOrderStatusesSize() {
-        long numOfCategories = catService.getFixSize();
-        return new ResponseEntity<Long>(numOfCategories, HttpStatus.OK);
     }
 
     @GetMapping("/messagetype")

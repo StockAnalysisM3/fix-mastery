@@ -5,7 +5,7 @@ import com.fixmastery.orders.dto.RawOrderData;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Trade {
+public class TradeCommand {
     private String id;
     private LocalDateTime created;
     private LocalDateTime executed = null;
@@ -15,10 +15,9 @@ public class Trade {
     private String sideId;
     private long targetQuantity;
     private long completedQuantity;
-    private BigDecimal price;
-    private String tradeParentId = null;
+    private BigDecimal averagePrice;
 
-    public Trade(
+    public TradeCommand(
             String id,
             LocalDateTime dateTimeStamp,
             Order order,
@@ -34,7 +33,7 @@ public class Trade {
         this.tradeStatusId = tradeStatusId;
         this.sideId = sideId;
         this.targetQuantity = targetQuantity;
-        this.price = null;
+        this.averagePrice = null;
     }
 
     public void updateParentOrder(RawOrderData data){
@@ -72,12 +71,8 @@ public class Trade {
         return targetQuantity;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public String getTradeParentId() {
-        return tradeParentId;
+    public BigDecimal getAveragePrice() {
+        return averagePrice;
     }
 
     public long getCompletedQuantity() {
@@ -90,16 +85,17 @@ public class Trade {
 
     @Override
     public String toString() {
-        return "Trade{" +
+        return "TradeCommand{" +
                 "id='" + id + '\'' +
                 ", created=" + created +
                 ", executed=" + executed +
                 ", order=" + order +
-                ", instrument='" + instrument + '\'' +
-                ", tradeStatus=" + tradeStatusId +
-                ", side=" + sideId +
-                ", quantity=" + targetQuantity +
-                ", price=" + price +
+                ", instrument=" + instrument +
+                ", tradeStatusId='" + tradeStatusId + '\'' +
+                ", sideId='" + sideId + '\'' +
+                ", targetQuantity=" + targetQuantity +
+                ", completedQuantity=" + completedQuantity +
+                ", averagePrice=" + averagePrice +
                 '}';
     }
 }

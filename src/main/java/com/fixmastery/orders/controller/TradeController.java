@@ -1,7 +1,7 @@
 package com.fixmastery.orders.controller;
 
 import com.fixmastery.errorshandlers.MapValidationErrorsService;
-import com.fixmastery.orders.model.Trade;
+import com.fixmastery.orders.model.TradeCommand;
 import com.fixmastery.orders.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +30,8 @@ public class TradeController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllTrades() {
-        Iterable<Trade> allTrades = tradeService.getAllTrades();
-        return new ResponseEntity<Iterable<Trade>>(allTrades, HttpStatus.OK);
+        Iterable<TradeCommand> allTrades = tradeService.getAllTrades();
+        return new ResponseEntity<Iterable<TradeCommand>>(allTrades, HttpStatus.OK);
     }
 
     @GetMapping("/idset")
@@ -42,21 +42,21 @@ public class TradeController {
 
     @GetMapping("/byid/{id}")
     public ResponseEntity<?> getTradeById(@PathVariable String id) {
-        Optional<Trade> trade = tradeService.getTradeById(id);
-        return new ResponseEntity<Optional<Trade>>(trade, HttpStatus.OK);
+        Optional<TradeCommand> trade = tradeService.getTradeById(id);
+        return new ResponseEntity<Optional<TradeCommand>>(trade, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> addOrUpdateTrade(@RequestBody Trade trade, BindingResult result) {
+    public ResponseEntity<?> addOrUpdateTrade(@RequestBody TradeCommand tradeCommand, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorsService.MapValidationErrorsService(result);
 
         if(errorMap != null) {
             return errorMap;
         }
 
-        tradeService.addOrUpdateTrade(trade);
+        tradeService.addOrUpdateTrade(tradeCommand);
 
-        return new ResponseEntity<Trade>(trade, HttpStatus.OK);
+        return new ResponseEntity<TradeCommand>(tradeCommand, HttpStatus.OK);
     }
 
 }

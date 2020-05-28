@@ -1,9 +1,8 @@
 package com.fixmastery.orders.dao.adapter;
 
-import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.fixmastery.orders.dao.modeldao.TradeRepository;
 import com.fixmastery.orders.dto.RawOrderData;
-import com.fixmastery.orders.model.Trade;
+import com.fixmastery.orders.model.TradeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,20 +34,20 @@ public class TradeStrategy {
         // place one for updateParentTrade
     }
 
-        private Trade createTradeDirectlyFromOrderData(RawOrderData data) {
-            Trade newTrade = tradeRepository.addNewTradeFromOrderData(data);
-            this.message += tradeIsCreatedMessage(newTrade);
-            return newTrade;
+        private TradeCommand createTradeDirectlyFromOrderData(RawOrderData data) {
+            TradeCommand newTradeCommand = tradeRepository.addNewTradeFromOrderData(data);
+            this.message += tradeIsCreatedMessage(newTradeCommand);
+            return newTradeCommand;
         }
 
-            private String tradeIsCreatedMessage(Trade trade) {
-                return "Trade " + trade.getId() + " has been created\n" +
-                    trade;
+            private String tradeIsCreatedMessage(TradeCommand tradeCommand) {
+                return "Trade " + tradeCommand.getId() + " has been created\n" +
+                        tradeCommand;
             }
 
         private void executeTrade(RawOrderData data) {
-            Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
-            executedTrade.executeTrade(data);
+            TradeCommand executedTradeCommand = tradeRepository.getTradeById(data.getParentId());
+            executedTradeCommand.executeTrade(data);
             this.message += tradeIsExecutedMessage(data);
         }
 

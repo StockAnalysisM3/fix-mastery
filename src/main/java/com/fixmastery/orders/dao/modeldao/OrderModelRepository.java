@@ -2,7 +2,7 @@ package com.fixmastery.orders.dao.modeldao;
 
 import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.Order;
-import com.fixmastery.orders.model.Trade;
+import com.fixmastery.orders.model.TradeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,8 +46,8 @@ public class OrderModelRepository {
     }
 
     public Order getOrderParentFromTradeId(String tradeId) {
-        Trade trade = tradeRepo.getTradeById(tradeId);
-        return trade.getOrder();
+        TradeCommand tradeCommand = tradeRepo.getTradeById(tradeId);
+        return tradeCommand.getOrder();
     }
 
     public boolean doesTradeIdExistInOrderInstance(String orderId, String tradeId) {

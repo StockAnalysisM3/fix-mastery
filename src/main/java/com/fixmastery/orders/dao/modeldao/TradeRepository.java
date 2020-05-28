@@ -1,7 +1,7 @@
 package com.fixmastery.orders.dao.modeldao;
 
 import com.fixmastery.orders.dto.RawOrderData;
-import com.fixmastery.orders.model.Trade;
+import com.fixmastery.orders.model.TradeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,14 +16,14 @@ public class TradeRepository {
     @Autowired
     OrderModelRepository orderRepo;
 
-    Map<String, Trade> tradeRepo = new HashMap<>();
+    Map<String, TradeCommand> tradeRepo = new HashMap<>();
 
-    public void addNewTrade(Trade trade) {
-        tradeRepo.put(trade.getId(), trade);
+    public void addNewTrade(TradeCommand tradeCommand) {
+        tradeRepo.put(tradeCommand.getId(), tradeCommand);
     }
 
-    public Trade addNewTradeFromOrderData(RawOrderData data) {
-        Trade newTrade = new Trade(
+    public TradeCommand addNewTradeFromOrderData(RawOrderData data) {
+        TradeCommand newTradeCommand = new TradeCommand(
                 data.getInstanceId(),
                 data.getDateTimeStamp(),
                 orderRepo.getOrderById(data.getOrderId()),
@@ -33,11 +33,11 @@ public class TradeRepository {
                 data.getInitialQuantity()
         );
 
-        addNewTrade(newTrade);
-        return newTrade;
+        addNewTrade(newTradeCommand);
+        return newTradeCommand;
     }
 
-    public Iterable<Trade> getAll(){
+    public Iterable<TradeCommand> getAll(){
         return tradeRepo.values();
     }
 
@@ -45,7 +45,7 @@ public class TradeRepository {
         return tradeRepo.keySet();
     }
 
-    public Trade getTradeById(String id){
+    public TradeCommand getTradeById(String id){
         return tradeRepo.get(id);
     }
 
@@ -64,9 +64,9 @@ public class TradeRepository {
             return getTradeById(tradeId).getOrder().getId().equals(orderId);
         }
 
-    public Iterable<Trade> getAllByOrderId(String orderId) {
-        Collection<Trade> allTrades = tradeRepo.values();
-        Iterable<Trade> tradesOfOrder = allTrades
+    public Iterable<TradeCommand> getAllByOrderId(String orderId) {
+        Collection<TradeCommand> allTradeCommands = tradeRepo.values();
+        Iterable<TradeCommand> tradesOfOrder = allTradeCommands
             .stream()
             .filter(trade -> trade.getOrder().getId().equals(orderId))
             .collect(Collectors.toList());

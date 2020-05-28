@@ -1,6 +1,8 @@
 package com.fixmastery.orders.dao.modeldao;
 
+import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.Trade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -10,10 +12,29 @@ import java.util.stream.Collectors;
 
 @Component
 public class TradeRepository {
+
+    @Autowired
+    OrderModelRepository orderRepo;
+
     Map<String, Trade> tradeRepo = new HashMap<>();
 
     public void addNewTrade(Trade trade) {
         tradeRepo.put(trade.getId(), trade);
+    }
+
+    public Trade addNewTradeFromOrderData(RawOrderData data) {
+        Trade newTrade = new Trade(
+                data.getInstanceId(),
+                data.getDateTimeStamp(),
+                orderRepo.getOrderById(data.getOrderId()),
+                data.getInstrument(),
+                data.getOrderStatus(),
+                data.getSide(),
+                data.getInitialQuantity()
+        );
+
+        addNewTrade(newTrade);
+        return newTrade;
     }
 
     public Iterable<Trade> getAll(){

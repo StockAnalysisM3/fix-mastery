@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 public class TradeStrategy {
 
     @Autowired
-    OrderModelRepository orderRepository;
-
-    @Autowired
     TradeRepository tradeRepository;
 
     private String message = "";
@@ -27,7 +24,7 @@ public class TradeStrategy {
             data.getParentId().substring(0,2).equals("om") &&
             data.getCompletedQuantity() == null
         ) {
-            createTradeDirectlyFromOrder(data);
+            createTradeDirectlyFromOrderData(data);
         } else if(
                 data.getInstanceId().substring(0,2).equals("te") &&
                 data.getParentId().substring(0,2).equals("te") &&
@@ -38,21 +35,9 @@ public class TradeStrategy {
         // place one for updateParentTrade
     }
 
-        private Trade createTradeDirectlyFromOrder(RawOrderData data) {
-            Trade newTrade = new Trade(
-                data.getInstanceId(),
-                data.getDateTimeStamp(),
-                orderRepository.getOrderById(data.getOrderId()),
-                data.getInstrument(),
-                data.getOrderStatus(),
-                data.getSide(),
-                data.getInitialQuantity()
-            );
-
-            tradeRepository.addNewTrade(newTrade);
-
+        private Trade createTradeDirectlyFromOrderData(RawOrderData data) {
+            Trade newTrade = tradeRepository.addNewTradeFromOrderData(data);
             this.message += tradeIsCreatedMessage(newTrade);
-
             return newTrade;
         }
 
@@ -64,13 +49,17 @@ public class TradeStrategy {
         private void executeTrade(RawOrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getParentId());
             executedTrade.executeTrade(data);
-
             this.message += tradeIsExecutedMessage(data);
         }
 
             private String tradeIsExecutedMessage(RawOrderData data) {
                 return "Trade " + data.getParentId() + " has been executed\n" +
-                    "Execution { Id: " + data.getInstanceId() + " Instrument: " + data.getInstrument() +" Quantity: " + data.getInitialQuantity() + " Price: " + data.getPrice() + "}";
+                    "Execution {" +
+                        "Id: " + data.getInstanceId() +
+                        " Instrument: " + data.getInstrument() +
+                        " Quantity: " + data.getInitialQuantity() +
+                        " Price: " + data.getPrice() +
+                    "}";
             }
 
     public String getMessage() {

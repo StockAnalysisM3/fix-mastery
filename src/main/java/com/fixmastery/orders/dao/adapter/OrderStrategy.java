@@ -24,38 +24,30 @@ public class OrderStrategy {
     public void strategy(RawOrderData data) {
         this.message = "";
         if(data.getParentId() == null) {
-            createNewOrder(data);
+            createNewOrderFromOrderData(data);
         }
         else if(
             tradeExistsWithinOrderInstance(data) &&
             data.getParentId().substring(0,2).equals("om") &&
             data.getCompletedQuantity() != null
         ) {
-            updateOrder(data);
+            Order updatedOrder = updateOrder(data);
+            if(data.getOrderStatus().equals("2")) {
+                completeOrder(updatedOrder);
+            }
         }
     }
 
-        private Order createNewOrder(RawOrderData data) {
-            Order order = new Order(
-                data.getInstanceId(),
-                data.getClientId(),
-                data.getInstrument(),
-                data.getOrderStatus(),
-                data.getOrderType(),
-                data.getVenue(),
-                data.getSide(),
-                data.getInitialQuantity()
-            );
-
-            this.orderRepository.addNewOrder(order);
-
-            // TODO: Abstract to its own messageClass
-            this.message +=
-                    "Order " + order.getId() + " has been created\n" +
-                            order;
-
-            return order;
+        private Order createNewOrderFromOrderData(RawOrderData data) {
+            Order newOrder = orderRepository.addNewOrderFromOrderData(data);
+            this.message += orderIsCreatedMessage(newOrder);
+            return newOrder;
         }
+
+            private String orderIsCreatedMessage(Order order) {
+                return "Order " + order.getId() + " has been created\n" +
+                        order;
+            }
 
         private boolean tradeExistsWithinOrderInstance(RawOrderData data){
             return orderRepository.doesTradeIdExistInOrderInstance(
@@ -65,24 +57,20 @@ public class OrderStrategy {
 
         private Order updateOrder(RawOrderData data) {
             Trade executedTrade = tradeRepository.getTradeById(data.getInstanceId());
-            Order parentOrder = executedTrade.getOrder();
+            Order parentOrder = orderRepository.getOrderParentFromTradeId(data.getInstanceId());
             executedTrade.updateParentOrder(data);
-
-            if(data.getOrderStatus().equals("2")) {
-                completeOrder(parentOrder);
-            }
-
-            //TODO: abstract to its own messageService class
-            this.message +=
-                    "Order " + parentOrder.getId() + " has been updated\n" +
-                            parentOrder;
-
+            this.message += orderIsUpdatedMessage(parentOrder);
             return parentOrder;
         }
 
+            private String orderIsUpdatedMessage(Order order) {
+                return "Order " + order.getId() + " has been updated\n" +
+                        order;
+            }
+
         private void completeOrder(Order order) {
             order.setFulfilled(true);
-            this.message += "Order " + order.getId() + " has been fulfilled\n";
+            this.message += "\nOrder " + order.getId() + " has been fulfilled\n";
         }
 
     public String getMessage() {

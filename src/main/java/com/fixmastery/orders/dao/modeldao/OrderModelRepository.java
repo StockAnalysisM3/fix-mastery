@@ -1,6 +1,8 @@
 package com.fixmastery.orders.dao.modeldao;
 
+import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.Order;
+import com.fixmastery.orders.model.Trade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,26 @@ public class OrderModelRepository {
 
     Map<String, Order> orderRepo = new HashMap<>();
 
+    public void addNewOrder(Order order){
+        orderRepo.put(order.getId(), order);
+    }
+
+    public Order addNewOrderFromOrderData(RawOrderData data) {
+        Order newOrder = new Order(
+                data.getInstanceId(),
+                data.getClientId(),
+                data.getInstrument(),
+                data.getOrderStatus(),
+                data.getOrderType(),
+                data.getVenue(),
+                data.getSide(),
+                data.getInitialQuantity()
+        );
+
+        addNewOrder(newOrder);
+        return newOrder;
+    }
+
     public Iterable<Order> getAll() {
         return orderRepo.values();
     }
@@ -27,8 +49,9 @@ public class OrderModelRepository {
         return orderRepo.get(id);
     }
 
-    public void addNewOrder(Order order){
-        orderRepo.put(order.getId(), order);
+    public Order getOrderParentFromTradeId(String tradeId) {
+        Trade trade = tradeRepo.getTradeById(tradeId);
+        return trade.getOrder();
     }
 
     public boolean doesTradeIdExistInOrderInstance(String orderId, String tradeId) {

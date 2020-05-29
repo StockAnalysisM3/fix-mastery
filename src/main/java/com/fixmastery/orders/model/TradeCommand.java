@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 public class TradeCommand {
     private String id;
     private LocalDateTime created;
-    private LocalDateTime executed = null;
     private Order order;
     private int instrument;
     private String tradeStatusId = "0";
     private String sideId;
     private long targetQuantity;
-    private long completedQuantity;
-    private BigDecimal averagePrice;
+    private long completedQuantity = 0;
+    private long pendingQuantity = 0;
+    private BigDecimal averagePrice = BigDecimal.ZERO;
 
     public TradeCommand(
             String id,
@@ -33,7 +33,6 @@ public class TradeCommand {
         this.tradeStatusId = tradeStatusId;
         this.sideId = sideId;
         this.targetQuantity = targetQuantity;
-        this.averagePrice = null;
     }
 
     public void updateParentOrder(RawOrderData data){
@@ -43,7 +42,6 @@ public class TradeCommand {
     }
 
     public void executeTrade(RawOrderData data) {
-        this.executed = data.getDateTimeStamp();
         this.tradeStatusId = data.getOrderStatus();
     }
 
@@ -71,12 +69,36 @@ public class TradeCommand {
         return targetQuantity;
     }
 
-    public BigDecimal getAveragePrice() {
-        return averagePrice;
+    public long getPendingQuantity() {
+        return pendingQuantity;
     }
 
     public long getCompletedQuantity() {
         return completedQuantity;
+    }
+
+    public BigDecimal getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setTradeStatusId(String tradeStatusId) {
+        this.tradeStatusId = tradeStatusId;
+    }
+
+    public void setTargetQuantity(long targetQuantity) {
+        this.targetQuantity = targetQuantity;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setPendingQuantity(long pendingQuantity) {
+        this.pendingQuantity = pendingQuantity;
+    }
+
+    public void setAveragePrice(BigDecimal averagePrice) {
+        this.averagePrice = averagePrice;
     }
 
     public void setCompletedQuantity(long completedQuantity) {
@@ -88,13 +110,13 @@ public class TradeCommand {
         return "TradeCommand{" +
                 "id='" + id + '\'' +
                 ", created=" + created +
-                ", executed=" + executed +
                 ", order=" + order +
                 ", instrument=" + instrument +
                 ", tradeStatusId='" + tradeStatusId + '\'' +
                 ", sideId='" + sideId + '\'' +
                 ", targetQuantity=" + targetQuantity +
                 ", completedQuantity=" + completedQuantity +
+                ", pendingQuantity=" + pendingQuantity +
                 ", averagePrice=" + averagePrice +
                 '}';
     }

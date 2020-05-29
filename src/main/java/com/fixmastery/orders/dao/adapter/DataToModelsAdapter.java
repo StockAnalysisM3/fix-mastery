@@ -28,7 +28,6 @@ public class DataToModelsAdapter {
 
     public void adapt() {
         Iterator<RawOrderData> allOrderData = rawOrderDataRepository.findAll().iterator();
-
         allOrderData.forEachRemaining(data -> adaptInstance(data));
     }
 
@@ -36,7 +35,13 @@ public class DataToModelsAdapter {
         System.out.println("===============================================");
         System.out.println(data);
         Message message
-            = new Message(data.getId(), data.getDateTimeStamp(), data.getSystemId(), data.getMessage());
+            = new Message(
+                data.getId(),
+                data.getDateTimeStamp(),
+                data.getSystemId(),
+                data.getMessageType(),
+                data.getMessage()
+            );
 
         orderStrategy.strategy(data);
         message.appendMessage(orderStrategy.getMessage());

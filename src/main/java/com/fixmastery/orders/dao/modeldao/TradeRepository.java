@@ -24,13 +24,13 @@ public class TradeRepository {
 
     public TradeCommand addNewTradeFromOrderData(RawOrderData data) {
         TradeCommand newTradeCommand = new TradeCommand(
-                data.getInstanceId(),
-                data.getDateTimeStamp(),
-                orderRepo.getOrderById(data.getOrderId()),
-                data.getInstrument(),
-                data.getOrderStatus(),
-                data.getSide(),
-                data.getInitialQuantity()
+            data.getInstanceId(),
+            data.getDateTimeStamp(),
+            orderRepo.getOrderById(data.getOrderId()),
+            data.getInstrument(),
+            data.getOrderStatus(),
+            data.getSide(),
+            data.getInitialQuantity()
         );
 
         addNewTrade(newTradeCommand);
@@ -47,6 +47,16 @@ public class TradeRepository {
 
     public TradeCommand getTradeById(String id){
         return tradeRepo.get(id);
+    }
+
+    public TradeCommand updateAfterExecutionThroughOrderData(RawOrderData data) {
+        TradeCommand tradeCommand = tradeRepo.get(data.getParentId());
+
+        tradeCommand.setTradeStatusId(data.getOrderStatus());
+        tradeCommand.setCompletedQuantity(data.getCompletedQuantity());
+        tradeCommand.setPendingQuantity(data.getPendingQuantity());
+
+        return tradeCommand;
     }
 
     public boolean doesTradeIdExistInOrderInstance(String orderId, String tradeId) {

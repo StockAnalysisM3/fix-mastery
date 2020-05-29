@@ -1,9 +1,7 @@
 package com.fixmastery.orders.model;
 
-import javax.persistence.Id;
-
 public class Order {
-    @Id
+
     private String id;
     private String clientId;
     private String orderStatusId;
@@ -14,7 +12,6 @@ public class Order {
             String clientId,
             String orderStatusId,
             String venue
-
         ) {
         this.id = id;
         this.clientId = clientId;
@@ -30,11 +27,6 @@ public class Order {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-
     public String getOrderStatusId() {
         return orderStatusId;
     }
@@ -46,10 +38,6 @@ public class Order {
 
     public String getVenue() {
         return venue;
-    }
-
-    public void setVenue(String venue) {
-        this.venue = venue;
     }
 
     public void fulfillOrder() {

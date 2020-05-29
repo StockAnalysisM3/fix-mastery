@@ -31,7 +31,6 @@ public class TradeStrategy {
         ) {
             executeTrade(data);
         }
-        // place one for updateParentTrade
     }
 
         private TradeCommand createTradeDirectlyFromOrderData(RawOrderData data) {
@@ -48,17 +47,24 @@ public class TradeStrategy {
         private void executeTrade(RawOrderData data) {
             TradeCommand executedTradeCommand = tradeRepository.getTradeById(data.getParentId());
             executedTradeCommand.executeTrade(data);
+            tradeRepository.updateAfterExecutionThroughOrderData(data);
             this.message += tradeIsExecutedMessage(data);
         }
 
+
             private String tradeIsExecutedMessage(RawOrderData data) {
                 return "Trade " + data.getParentId() + " has been executed\n" +
+                    tradeCommandIsUpdatedMessage(tradeRepository.getTradeById(data.getParentId())) + "\n" +
                     "Execution {" +
                         "Id: " + data.getInstanceId() +
                         " Instrument: " + data.getInstrument() +
                         " Quantity: " + data.getInitialQuantity() +
                         " Price: " + data.getPrice() +
                     "}";
+            }
+
+            private String tradeCommandIsUpdatedMessage(TradeCommand tradeCommand) {
+                return tradeCommand.toString();
             }
 
     public String getMessage() {

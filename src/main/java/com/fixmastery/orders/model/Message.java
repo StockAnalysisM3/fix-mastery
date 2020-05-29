@@ -6,12 +6,14 @@ public class Message {
     private long id;
     private LocalDateTime dateTimeStamp;
     private String system;
+    private String messageType;
     private String message;
 
-    public Message(long id, LocalDateTime dateTimeStamp, String system, String message) {
+    public Message(long id, LocalDateTime dateTimeStamp, String system, String messageType, String message) {
         this.id = id;
         this.dateTimeStamp = dateTimeStamp;
         this.system = system;
+        this.messageType = messageType;
         this.message = message;
     }
 

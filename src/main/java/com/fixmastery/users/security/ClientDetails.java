@@ -17,8 +17,7 @@ public class ClientDetails implements UserDetails {
     private boolean active;
     private List<GrantedAuthority> authorities;
 
-    public ClientDetails() {
-    }
+    public ClientDetails() {}
 
     public ClientDetails(String userName) {
         this.userName = userName;

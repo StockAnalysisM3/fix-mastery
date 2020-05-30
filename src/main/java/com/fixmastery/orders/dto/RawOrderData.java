@@ -49,11 +49,6 @@ public class RawOrderData {
     @Column(name="side")
     private String side;
 
-    /**
-     * For initial, completed, and pending quantities,
-     *      we are assuming values will be given in integers
-     */
-
     @Column(name="orderqty", columnDefinition = "Integer default 0")
     private Long initialQuantity;
 

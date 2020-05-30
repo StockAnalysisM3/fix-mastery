@@ -1,6 +1,6 @@
 package com.fixmastery.users.security;
 
-import net.bytebuddy.agent.builder.AgentBuilder;
+import com.fixmastery.users.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

@@ -1,6 +1,0 @@
-I. Authorization
-    1. Create a class that extends WebSecurityConfigurerAdapter
-        - has a method named configure that takes in an AuthenticationManagerBuilder
-            - Get hold of AuthenticationManagerBuilder -> creates AuthenticationManager
-            - Must override this method
-        - Spring Security will take your configuration settings

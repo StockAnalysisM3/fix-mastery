@@ -25,6 +25,8 @@ public class DataToModelsAdapter {
     private RawOrderDataRepository rawOrderDataRepository;
 
     // TODO: Autowire ExecutionStrategy
+    @Autowired
+    private ExecutionStrategy executionStrategy;
 
     public void adapt() {
         Iterator<RawOrderData> allOrderData = rawOrderDataRepository.findAll().iterator();

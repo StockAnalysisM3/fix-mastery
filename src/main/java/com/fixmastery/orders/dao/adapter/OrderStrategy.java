@@ -3,6 +3,7 @@ package com.fixmastery.orders.dao.adapter;
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
 import com.fixmastery.orders.dao.modeldao.TradeRepository;
 import com.fixmastery.orders.dto.RawOrderData;
+import com.fixmastery.orders.misc.messenger.OrderMessenger;
 import com.fixmastery.orders.model.Order;
 import com.fixmastery.orders.model.TradeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,9 @@ public class OrderStrategy {
 
         private Order createNewOrderFromOrderData(RawOrderData data) {
             Order newOrder = orderRepository.addNewOrderFromOrderData(data);
-            this.message += orderIsCreatedMessage(newOrder);
+            this.message += OrderMessenger.orderIsCreatedMessage(newOrder);
             return newOrder;
         }
-
-            private String orderIsCreatedMessage(Order order) {
-                return "Order " + order.getId() + " has been created\n" +
-                        order;
-            }
 
         private boolean tradeExistsWithinOrderInstance(RawOrderData data){
             return orderRepository.doesTradeIdExistInOrderInstance(
@@ -61,18 +57,13 @@ public class OrderStrategy {
             TradeCommand executedTrade = tradeRepository.getTradeById(data.getInstanceId());
             Order parentOrder = orderRepository.getOrderParentFromTradeId(data.getInstanceId());
             executedTrade.updateParentOrder(data);
-            this.message += orderIsUpdatedMessage(parentOrder);
+            this.message += OrderMessenger.orderIsUpdatedMessage(parentOrder);
             return parentOrder;
         }
 
-            private String orderIsUpdatedMessage(Order order) {
-                return "Order " + order.getId() + " has been updated\n" +
-                        order;
-            }
-
         private void completeOrder(Order order) {
             order.fulfillOrder();
-            this.message += "\nOrder " + order.getId() + " has been fulfilled\n";
+            this.message += OrderMessenger.orderHasBeenFulfilledMessage(order);
         }
 
     public String getMessage() {

@@ -5,17 +5,26 @@ import javax.persistence.Id;
 public class Instrument {
     @Id
     private String Id;
-
-
-    //to be replace by Hema's entity?
+    private String instrument;
+    private String ric;
+    private String isin;
+    private String sedol;
+    private String cusip;
+    private String bbid;
     private String mic;
-
     private String name;
 
-    public Instrument(String id, String name, String mic){
+    public Instrument(String id, String instrument, String ric,
+                      String sedol, String cusip, String bbid, String mic,
+                      String name){
         this.Id = id;
-        this.name = name;
+        this.instrument = instrument;
+        this.ric = ric;
+        this.sedol = sedol;
+        this.cusip = cusip;
+        this.bbid = bbid;
         this.mic = mic;
+        this.name = name;
     }
 
     public String getId() {
@@ -26,6 +35,53 @@ public class Instrument {
         Id = id;
     }
 
+    public String getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(String instrument) {
+        this.instrument = instrument;
+    }
+
+    public String getRic() {
+        return ric;
+    }
+
+    public void setRic(String ric) {
+        this.ric = ric;
+    }
+
+    public String getIsin() {
+        return isin;
+    }
+
+    public void setIsin(String isin) {
+        this.isin = isin;
+    }
+
+    public String getSedol() {
+        return sedol;
+    }
+
+    public void setSedol(String sedol) {
+        this.sedol = sedol;
+    }
+
+    public String getCusip() {
+        return cusip;
+    }
+
+    public void setCusip(String cusip) {
+        this.cusip = cusip;
+    }
+
+    public String getBbid() {
+        return bbid;
+    }
+
+    public void setBbid(String bbid) {
+        this.bbid = bbid;
+    }
 
     public String getMic() {
         return mic;
@@ -47,8 +103,14 @@ public class Instrument {
     public String toString() {
         return "Instrument{" +
                 "id='" + Id + '\'' +
-                ",name='" + name + '\'' +
-                ",mic='" + mic +
+                ",instrument='" + instrument + '\'' +
+                ",ric='" + ric + '\'' +
+                ",isin='" + isin + '\'' +
+                ",sedol='" + sedol + '\'' +
+                ",cusip='" + cusip + '\'' +
+                ",bbid='" + bbid + '\'' +
+                ",mic='" + mic + '\'' +
+                ",name='" + name +
                 '}';
     }
 }

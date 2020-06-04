@@ -11,12 +11,6 @@ public class TradeMessenger {
                 tradeCommand;
     }
 
-    /**
-     * This will be refactored
-     * @param tradeCommand
-     * @param data
-     * @return
-     */
     public static String tradeIsExecutedMessage(TradeCommand tradeCommand, RawOrderData data) {
         return "Trade " + tradeCommand.getId() + " has been executed\n" +
                 tradeCommandIsUpdatedMessage(tradeCommand) + "\n" +
@@ -35,10 +29,10 @@ public class TradeMessenger {
 
     public static String displayExecutionProperties(RawOrderData data) {
         return  "Execution {" +
-                "Id: " + data.getInstanceId() +
-                " Instrument: " + data.getInstrument() +
-                " Quantity: " + data.getInitialQuantity() +
-                " Price: " + data.getPrice() +
+                    " Id: " + data.getInstanceId() +
+                    " Instrument: " + data.getInstrument() +
+                    " Quantity: " + data.getInitialQuantity() +
+                    " Price: " + data.getPrice() +
                 "}";
     }
 

@@ -56,9 +56,7 @@ public class TradeStrategy {
 
         private TradeExecution createTradeExecutionFromOrderData(RawOrderData data) {
             TradeExecution newTradeExecution = tradeExecutionRepository.addNewTradeExecutionFromOrderData(data);
-
             this.message += TradeMessenger.tradeExecutionIsCreated(newTradeExecution);
-
             return newTradeExecution;
         }
 

@@ -25,27 +25,31 @@ public class TradeStrategy {
 
     public void strategy(RawOrderData data) {
         this.message = "";
-        if(
-            data.getInstanceId().substring(0,2).equals("te") &&
-            data.getParentId().substring(0,2).equals("om") &&
-            data.getCompletedQuantity() == null
-        ) {
 
-            createTradeCommandFromOrderData(data);
+        if(data.getInstanceId().substring(0,2).equals("te")) {
 
-        } else if(
-                data.getInstanceId().substring(0,2).equals("te") &&
+            if(
+                data.getParentId().substring(0,2).equals("om") &&
+                data.getCompletedQuantity() == null
+            ) {
+
+                createTradeCommandFromOrderData(data);
+
+            } else if(
                 data.getParentId().substring(0,2).equals("te") &&
                 data.getCompletedQuantity() != null
-        ) {
+            ) {
 
-            executeTrade(data);
+                executeTrade(data);
 
-        } else if(data.getPrice() == null) {
+            } else if(data.getPrice() == null) {
 
-            createTradeExecutionFromOrderData(data);
+                createTradeExecutionFromOrderData(data);
+
+            }
 
         }
+
     }
 
         private TradeCommand createTradeCommandFromOrderData(RawOrderData data) {
@@ -64,6 +68,7 @@ public class TradeStrategy {
             TradeCommand executedTradeCommand = tradeCommandRepository.getTradeCommandById(data.getParentId());
             executedTradeCommand.executeTrade(data);
             tradeCommandRepository.updateAfterExecutionThroughOrderData(data);
+            tradeExecutionRepository.updateExecutionFromOrderData(data);
             this.message += TradeMessenger.tradeIsExecutedMessage(executedTradeCommand, data);
         }
 

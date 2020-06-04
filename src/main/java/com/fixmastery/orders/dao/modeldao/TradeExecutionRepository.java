@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,6 +24,7 @@ public class TradeExecutionRepository {
         TradeExecution newTradeExecution = new TradeExecution(
             data.getInstanceId(),
             data.getParentId(),
+            data.getDateTimeStamp(),
             data.getInstrument(),
             data.getInitialQuantity(),
             data.getPrice()
@@ -30,6 +32,20 @@ public class TradeExecutionRepository {
 
         addNewTradeExecution(newTradeExecution);
         return newTradeExecution;
+    }
+
+    public TradeExecution updateExecutionFromOrderData(RawOrderData data) {
+        Optional<TradeExecution> executionNullable = Optional.ofNullable(
+            executionRepo.get(data.getInstanceId())
+        );
+
+        if(executionNullable.isEmpty()) {
+            return addNewTradeExecutionFromOrderData(data);
+        } else {
+            TradeExecution executed = executionNullable.get();
+            executed.setPrice(data.getPrice());
+            return executed;
+        }
     }
 
     public Iterable<TradeExecution> getAll(){
@@ -48,7 +64,7 @@ public class TradeExecutionRepository {
         Collection<TradeExecution> tradeExecutions = executionRepo.values();
         Iterable<TradeExecution> executionsOfCommand = tradeExecutions
             .stream()
-            .filter(exec -> exec.getCmdTradeId() == tradeCommand.getId())
+            .filter(exec -> exec.getCmdTradeId().equals(tradeCommand.getId()))
             .collect(Collectors.toList());
         return executionsOfCommand;
     }

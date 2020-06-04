@@ -1,32 +1,51 @@
 package com.fixmastery.mic.model;
 
 import com.fixmastery.mic.dto.MarketInstitutionData;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+
 
 public class MarketInstitution {
     @Id
     private String Id;
     private String countryId;
     private String name;
-
-    public MarketInstitution() {}
-
-    public MarketInstitution(String id, String cid, String name) {
-        this.Id = id;
-        this.countryId = cid;
-        this.name = name;
-    }
     private String acronym;
     private String city;
     private String website;
     private String description;
 
+    public MarketInstitution() {
+
+    }
+
+    public MarketInstitution(
+            String id,
+            String cid,
+            String name,
+            String acronym,
+            String city,
+            String website,
+            String description) {
+        this.Id = id;
+        this.countryId = cid;
+        this.name = name;
+        this.acronym = acronym;
+        this.city = city;
+        this.website = website;
+        this.description = description;
+    }
+
+
     public String getId() { return this.Id; }
 
     public void setId(String id) { this.Id = id; }
 
-    public String getCountryId() { return this.countryId; }
+    public String getCountryId() {
+        return this.countryId;
+    }
 
     public void setCountryId(String cid) { this.countryId = cid; }
 
@@ -52,7 +71,7 @@ public class MarketInstitution {
 
     @Override
     public String toString() {
-        return "Instrument{" +
+        return "MarketInstitution{" +
                 "id='" + Id + '\'' +
                 ",name='" + name + '\'' +
                 ",countryId='" + countryId + '\'' +

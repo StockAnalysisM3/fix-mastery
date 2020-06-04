@@ -1,6 +1,9 @@
 package com.fixmastery.mic.model;
 
+import com.fixmastery.mic.dao.CountryRepository;
+
 import javax.persistence.Id;
+import java.util.Collection;
 
 public class Country {
     @Id
@@ -8,13 +11,15 @@ public class Country {
     private String name;
     private String countryCode;
 
-    public Country() {}
+    public CountryRepository countryRepo;
 
-    public Country(String id, String name, String code) {
-        this.Id = id;
+    //public Country() {}
+
+    public Country(String name, String code) {
         this.name = name;
         this.countryCode = code;
     }
+
 
     public String getId() { return this.Id; }
 
@@ -27,6 +32,8 @@ public class Country {
     public String getCountryCode() { return this.countryCode; }
 
     public void setCountryCode(String code) { this.countryCode = code; }
+
+
 
     @Override
     public String toString() {

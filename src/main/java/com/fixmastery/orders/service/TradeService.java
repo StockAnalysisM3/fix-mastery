@@ -61,4 +61,8 @@ public class TradeService {
         return tradeExecutionRepository.getTradeExecutionsOfCommand(tradeCommand);
     }
 
+    public Iterable<TradeExecution> getTradeExecutionsByInstrumentId(int instrumentId) {
+        return tradeExecutionRepository.getTradeExecutionsByInstrumentId(instrumentId);
+    }
+
 }

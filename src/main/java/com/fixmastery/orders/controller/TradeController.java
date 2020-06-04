@@ -86,10 +86,15 @@ public class TradeController {
 
     @GetMapping("/exec/byid/{id}")
     public ResponseEntity<?> getTradeExecutionById(@PathVariable String id) {
-        Optional<TradeExecution> trade = tradeService.getTradeExecutionById(id);
-        return new ResponseEntity<Optional<TradeExecution>>(trade, HttpStatus.OK);
+        Optional<TradeExecution> exec = tradeService.getTradeExecutionById(id);
+        return new ResponseEntity<Optional<TradeExecution>>(exec, HttpStatus.OK);
     }
 
-
+    @GetMapping("/exec/byinstrument/{id}")
+    public ResponseEntity<?> getTradeExecutionsByInstrumentId(@PathVariable String id) {
+        int intId = Integer.parseInt(id);
+        Iterable<TradeExecution> executionsByInstrumentId = tradeService.getTradeExecutionsByInstrumentId(intId);
+        return new ResponseEntity<Iterable<TradeExecution>>(executionsByInstrumentId, HttpStatus.OK);
+    }
 
 }

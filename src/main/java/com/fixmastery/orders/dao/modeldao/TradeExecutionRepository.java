@@ -69,4 +69,13 @@ public class TradeExecutionRepository {
         return executionsOfCommand;
     }
 
+    public Iterable<TradeExecution> getTradeExecutionsByInstrumentId(int instrumentId) {
+        Collection<TradeExecution> tradeExecutions = executionRepo.values();
+        Iterable<TradeExecution> executionsByInstrumentId = tradeExecutions
+                .stream()
+                .filter(exec -> exec.getInstrumentId() == instrumentId)
+                .collect(Collectors.toList());
+        return executionsByInstrumentId;
+    }
+
 }

@@ -39,9 +39,11 @@ public class MarketInstitutionData {
     @Column(name="nameinstitutiondescription")
     private String description;
 
-    public MarketInstitutionData() {}
+    //public MarketInstitutionData() {}
 
-    public int getId() { return Id; }
+    public String getId() { return Integer.toString(Id); }
+
+    public String getOperatingMic() { return operatingMic; }
 
     public void setId(int id) { Id = id; }
 
@@ -50,6 +52,10 @@ public class MarketInstitutionData {
     public void setParentMic(String mic) { this.parentMic = parentMic; }
 
     public String getCountry() { return country; }
+
+//    public String addCountryToCountriesTable(Country country) {
+//        Country country = new Country()
+//    }
 
     public void setCountry(String country) {this.country = country; }
 

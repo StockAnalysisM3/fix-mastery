@@ -22,11 +22,15 @@ public class MarketInstitution {
     private String website;
     private String description;
 
+
+
     public String getId() { return this.Id; }
 
     public void setId(String id) { this.Id = id; }
 
-    public String getCountryId() { return this.countryId; }
+    public String getCountryId() {
+        return this.countryId;
+    }
 
     public void setCountryId(String cid) { this.countryId = cid; }
 
@@ -52,7 +56,7 @@ public class MarketInstitution {
 
     @Override
     public String toString() {
-        return "Instrument{" +
+        return "MarketInstitution{" +
                 "id='" + Id + '\'' +
                 ",name='" + name + '\'' +
                 ",countryId='" + countryId + '\'' +

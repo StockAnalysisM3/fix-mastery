@@ -2,6 +2,7 @@ package com.fixmastery.orders.misc.messenger;
 
 import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.TradeCommand;
+import com.fixmastery.orders.model.TradeExecution;
 
 public class TradeMessenger {
 
@@ -26,6 +27,12 @@ public class TradeMessenger {
         return tradeCommand.toString();
     }
 
+    public static String tradeExecutionIsCreated(TradeExecution tradeExecution) {
+        return  "TradeExecution " + tradeExecution.getId() + " is initialized\n" +
+                "Part of Command " + tradeExecution.getCmdTradeId() + "\n" +
+                tradeExecution.toString();
+    }
+
     public static String displayExecutionProperties(RawOrderData data) {
         return  "Execution {" +
                 "Id: " + data.getInstanceId() +
@@ -34,10 +41,5 @@ public class TradeMessenger {
                 " Price: " + data.getPrice() +
                 "}";
     }
-
-//    public static String displayExecutionProperties(TradeExecution execution) {
-//        return execution.toString();
-//    }
-
 
 }

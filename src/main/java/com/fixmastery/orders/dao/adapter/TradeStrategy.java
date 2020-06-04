@@ -1,9 +1,11 @@
 package com.fixmastery.orders.dao.adapter;
 
 import com.fixmastery.orders.dao.modeldao.TradeCommandRepository;
+import com.fixmastery.orders.dao.modeldao.TradeExecutionRepository;
 import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.misc.messenger.TradeMessenger;
 import com.fixmastery.orders.model.TradeCommand;
+import com.fixmastery.orders.model.TradeExecution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,9 @@ public class TradeStrategy {
 
     @Autowired
     TradeCommandRepository tradeCommandRepository;
+
+    @Autowired
+    TradeExecutionRepository tradeExecutionRepository;
 
     private String message = "";
 
@@ -25,20 +30,36 @@ public class TradeStrategy {
             data.getParentId().substring(0,2).equals("om") &&
             data.getCompletedQuantity() == null
         ) {
-            createTradeDirectlyFromOrderData(data);
+
+            createTradeCommandFromOrderData(data);
+
         } else if(
                 data.getInstanceId().substring(0,2).equals("te") &&
                 data.getParentId().substring(0,2).equals("te") &&
                 data.getCompletedQuantity() != null
         ) {
+
             executeTrade(data);
+
+        } else if(data.getPrice() == null) {
+
+            createTradeExecutionFromOrderData(data);
+
         }
     }
 
-        private TradeCommand createTradeDirectlyFromOrderData(RawOrderData data) {
+        private TradeCommand createTradeCommandFromOrderData(RawOrderData data) {
             TradeCommand newTradeCommand = tradeCommandRepository.addNewTradeCommandFromOrderData(data);
             this.message += TradeMessenger.tradeIsCreatedMessage(newTradeCommand);
             return newTradeCommand;
+        }
+
+        private TradeExecution createTradeExecutionFromOrderData(RawOrderData data) {
+            TradeExecution newTradeExecution = tradeExecutionRepository.addNewTradeExecutionFromOrderData(data);
+
+            this.message += TradeMessenger.tradeExecutionIsCreated(newTradeExecution);
+
+            return newTradeExecution;
         }
 
         private void executeTrade(RawOrderData data) {

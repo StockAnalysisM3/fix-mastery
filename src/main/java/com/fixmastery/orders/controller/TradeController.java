@@ -59,4 +59,9 @@ public class TradeController {
         return new ResponseEntity<TradeCommand>(tradeCommand, HttpStatus.OK);
     }
 
+    // Exec
+    // get 1
+    // get all
+    // get by command
+
 }

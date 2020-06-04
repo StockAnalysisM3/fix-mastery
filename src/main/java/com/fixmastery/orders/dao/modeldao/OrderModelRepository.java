@@ -13,7 +13,7 @@ import java.util.Map;
 public class OrderModelRepository {
 
     @Autowired
-    TradeRepository tradeRepo;
+    TradeCommandRepository tradeRepo;
 
     Map<String, Order> orderRepo = new HashMap<>();
 
@@ -46,7 +46,7 @@ public class OrderModelRepository {
     }
 
     public Order getOrderParentFromTradeId(String tradeId) {
-        TradeCommand tradeCommand = tradeRepo.getTradeById(tradeId);
+        TradeCommand tradeCommand = tradeRepo.getTradeCommandById(tradeId);
         return tradeCommand.getOrder();
     }
 

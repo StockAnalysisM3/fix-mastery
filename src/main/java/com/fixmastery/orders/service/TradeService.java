@@ -1,6 +1,6 @@
 package com.fixmastery.orders.service;
 
-import com.fixmastery.orders.dao.modeldao.TradeRepository;
+import com.fixmastery.orders.dao.modeldao.TradeCommandRepository;
 import com.fixmastery.orders.model.TradeCommand;
 import com.google.common.collect.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +12,26 @@ import java.util.Optional;
 public class TradeService {
 
     @Autowired
-    private TradeRepository tradeRepository;
+    private TradeCommandRepository tradeCommandRepository;
 
     public long getTradesSize() {
-        return Iterators.size(tradeRepository.getAll().iterator());
+        return Iterators.size(tradeCommandRepository.getAll().iterator());
     }
 
     public Iterable<TradeCommand> getAllTrades() {
-        return tradeRepository.getAll();
+        return tradeCommandRepository.getAll();
     }
 
     public Iterable<String> getAllTradeIds() {
-        return tradeRepository.getAllIds();
+        return tradeCommandRepository.getAllIds();
     }
 
     public Optional<TradeCommand> getTradeById(String id) {
-        TradeCommand requestedTradeCommand = tradeRepository.getTradeById(id);
+        TradeCommand requestedTradeCommand = tradeCommandRepository.getTradeCommandById(id);
         return Optional.ofNullable(requestedTradeCommand);
     }
 
     public void addOrUpdateTrade(TradeCommand tradeCommand) {
-        tradeRepository.addNewTrade(tradeCommand);
+        tradeCommandRepository.addNewTradeCommand(tradeCommand);
     }
 }

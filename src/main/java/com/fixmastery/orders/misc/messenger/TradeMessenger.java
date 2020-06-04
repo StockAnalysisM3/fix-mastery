@@ -5,7 +5,18 @@ import com.fixmastery.orders.model.TradeCommand;
 
 public class TradeMessenger {
 
-    private String tradeIsExecutedMessage(TradeCommand tradeCommand, RawOrderData data) {
+    public static String tradeIsCreatedMessage(TradeCommand tradeCommand) {
+        return "Trade Command" + tradeCommand.getId() + " has been created\n" +
+                tradeCommand;
+    }
+
+    /**
+     * This will be refactored
+     * @param tradeCommand
+     * @param data
+     * @return
+     */
+    public static String tradeIsExecutedMessage(TradeCommand tradeCommand, RawOrderData data) {
         return "Trade " + tradeCommand.getId() + " has been executed\n" +
                 tradeCommandIsUpdatedMessage(tradeCommand) + "\n" +
                 displayExecutionProperties(data);

@@ -1,7 +1,7 @@
 package com.fixmastery.orders.dao.adapter;
 
 import com.fixmastery.orders.dao.modeldao.OrderModelRepository;
-import com.fixmastery.orders.dao.modeldao.TradeRepository;
+import com.fixmastery.orders.dao.modeldao.TradeCommandRepository;
 import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.misc.messenger.OrderMessenger;
 import com.fixmastery.orders.model.Order;
@@ -16,7 +16,7 @@ public class OrderStrategy {
     OrderModelRepository orderRepository;
 
     @Autowired
-    TradeRepository tradeRepository;
+    TradeCommandRepository tradeCommandRepository;
 
     private String message;
 
@@ -54,7 +54,7 @@ public class OrderStrategy {
         }
 
         private Order updateOrder(RawOrderData data) {
-            TradeCommand executedTrade = tradeRepository.getTradeById(data.getInstanceId());
+            TradeCommand executedTrade = tradeCommandRepository.getTradeCommandById(data.getInstanceId());
             Order parentOrder = orderRepository.getOrderParentFromTradeId(data.getInstanceId());
             executedTrade.updateParentOrder(data);
             this.message += OrderMessenger.orderIsUpdatedMessage(parentOrder);

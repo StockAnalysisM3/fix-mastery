@@ -1,16 +1,18 @@
 package com.fixmastery.orders.dao.adapter;
 
-import com.fixmastery.orders.dao.modeldao.TradeRepository;
+import com.fixmastery.orders.dao.modeldao.TradeCommandRepository;
 import com.fixmastery.orders.dto.RawOrderData;
+import com.fixmastery.orders.misc.messenger.TradeMessenger;
 import com.fixmastery.orders.model.TradeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+// The TradeStrategy will contain cases for the two Trade classes
 @Component
 public class TradeStrategy {
 
     @Autowired
-    TradeRepository tradeRepository;
+    TradeCommandRepository tradeCommandRepository;
 
     private String message = "";
 
@@ -34,38 +36,17 @@ public class TradeStrategy {
     }
 
         private TradeCommand createTradeDirectlyFromOrderData(RawOrderData data) {
-            TradeCommand newTradeCommand = tradeRepository.addNewTradeFromOrderData(data);
-            this.message += tradeIsCreatedMessage(newTradeCommand);
+            TradeCommand newTradeCommand = tradeCommandRepository.addNewTradeCommandFromOrderData(data);
+            this.message += TradeMessenger.tradeIsCreatedMessage(newTradeCommand);
             return newTradeCommand;
         }
 
-            private String tradeIsCreatedMessage(TradeCommand tradeCommand) {
-                return "Trade " + tradeCommand.getId() + " has been created\n" +
-                        tradeCommand;
-            }
-
         private void executeTrade(RawOrderData data) {
-            TradeCommand executedTradeCommand = tradeRepository.getTradeById(data.getParentId());
+            TradeCommand executedTradeCommand = tradeCommandRepository.getTradeCommandById(data.getParentId());
             executedTradeCommand.executeTrade(data);
-            tradeRepository.updateAfterExecutionThroughOrderData(data);
-            this.message += tradeIsExecutedMessage(data);
+            tradeCommandRepository.updateAfterExecutionThroughOrderData(data);
+            this.message += TradeMessenger.tradeIsExecutedMessage(executedTradeCommand, data);
         }
-
-
-            private String tradeIsExecutedMessage(RawOrderData data) {
-                return "Trade " + data.getParentId() + " has been executed\n" +
-                    tradeCommandIsUpdatedMessage(tradeRepository.getTradeById(data.getParentId())) + "\n" +
-                    "Execution {" +
-                        "Id: " + data.getInstanceId() +
-                        " Instrument: " + data.getInstrument() +
-                        " Quantity: " + data.getInitialQuantity() +
-                        " Price: " + data.getPrice() +
-                    "}";
-            }
-
-            private String tradeCommandIsUpdatedMessage(TradeCommand tradeCommand) {
-                return tradeCommand.toString();
-            }
 
     public String getMessage() {
         return message;

@@ -11,18 +11,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class TradeRepository {
+public class TradeCommandRepository {
 
     @Autowired
     OrderModelRepository orderRepo;
 
-    Map<String, TradeCommand> tradeRepo = new HashMap<>();
+    Map<String, TradeCommand> commandRepo = new HashMap<>();
 
-    public void addNewTrade(TradeCommand tradeCommand) {
-        tradeRepo.put(tradeCommand.getId(), tradeCommand);
+    public void addNewTradeCommand(TradeCommand tradeCommand) {
+        commandRepo.put(tradeCommand.getId(), tradeCommand);
     }
 
-    public TradeCommand addNewTradeFromOrderData(RawOrderData data) {
+    public TradeCommand addNewTradeCommandFromOrderData(RawOrderData data) {
         TradeCommand newTradeCommand = new TradeCommand(
             data.getInstanceId(),
             data.getDateTimeStamp(),
@@ -33,24 +33,24 @@ public class TradeRepository {
             data.getInitialQuantity()
         );
 
-        addNewTrade(newTradeCommand);
+        addNewTradeCommand(newTradeCommand);
         return newTradeCommand;
     }
 
     public Iterable<TradeCommand> getAll(){
-        return tradeRepo.values();
+        return commandRepo.values();
     }
 
     public Iterable<String> getAllIds() {
-        return tradeRepo.keySet();
+        return commandRepo.keySet();
     }
 
-    public TradeCommand getTradeById(String id){
-        return tradeRepo.get(id);
+    public TradeCommand getTradeCommandById(String id){
+        return commandRepo.get(id);
     }
 
     public TradeCommand updateAfterExecutionThroughOrderData(RawOrderData data) {
-        TradeCommand tradeCommand = tradeRepo.get(data.getParentId());
+        TradeCommand tradeCommand = commandRepo.get(data.getParentId());
 
         tradeCommand.setTradeStatusId(data.getOrderStatus());
         tradeCommand.setCompletedQuantity(data.getCompletedQuantity());
@@ -62,7 +62,7 @@ public class TradeRepository {
     public boolean doesTradeIdExistInOrderInstance(String orderId, String tradeId) {
         boolean found = false;
 
-        found = tradeRepo.containsKey(tradeId);
+        found = commandRepo.containsKey(tradeId);
         if(found) {
             found = doesOrderIDParamMatchWithTradeOrder(orderId, tradeId);
         }
@@ -71,11 +71,11 @@ public class TradeRepository {
     }
 
         private boolean doesOrderIDParamMatchWithTradeOrder(String orderId, String tradeId) {
-            return getTradeById(tradeId).getOrder().getId().equals(orderId);
+            return getTradeCommandById(tradeId).getOrder().getId().equals(orderId);
         }
 
     public Iterable<TradeCommand> getAllByOrderId(String orderId) {
-        Collection<TradeCommand> allTradeCommands = tradeRepo.values();
+        Collection<TradeCommand> allTradeCommands = commandRepo.values();
         Iterable<TradeCommand> tradesOfOrder = allTradeCommands
             .stream()
             .filter(trade -> trade.getOrder().getId().equals(orderId))

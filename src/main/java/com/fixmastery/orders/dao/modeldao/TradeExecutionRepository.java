@@ -6,14 +6,13 @@ import com.fixmastery.orders.model.TradeExecution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class TradeExecutionRepository {
-
-    @Autowired
-    TradeCommandRepository commandRepo;
 
     Map<String, TradeExecution> executionRepo = new HashMap<>();
 
@@ -34,5 +33,25 @@ public class TradeExecutionRepository {
         return newTradeExecution;
     }
 
-    // update parent?
+    public Iterable<TradeExecution> getAll(){
+        return executionRepo.values();
+    }
+
+    public Iterable<String> getAllIds() {
+        return executionRepo.keySet();
+    }
+
+    public TradeExecution getTradeExecutionById(String id){
+        return executionRepo.get(id);
+    }
+
+    public Iterable<TradeExecution> getTradeExecutionsOfCommand(TradeCommand tradeCommand) {
+        Collection<TradeExecution> tradeExecutions = executionRepo.values();
+        Iterable<TradeExecution> executionsOfCommand = tradeExecutions
+            .stream()
+            .filter(exec -> exec.getCmdTradeId() == tradeCommand.getId())
+            .collect(Collectors.toList());
+        return executionsOfCommand;
+    }
+
 }

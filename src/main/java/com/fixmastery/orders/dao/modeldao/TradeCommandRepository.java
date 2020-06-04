@@ -2,6 +2,7 @@ package com.fixmastery.orders.dao.modeldao;
 
 import com.fixmastery.orders.dto.RawOrderData;
 import com.fixmastery.orders.model.TradeCommand;
+import com.fixmastery.orders.model.TradeExecution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +49,27 @@ public class TradeCommandRepository {
     public TradeCommand getTradeCommandById(String id){
         return commandRepo.get(id);
     }
+
+    public TradeCommand updateAfterExecution(TradeExecution tradeExecution) {
+        TradeCommand parentCommand = commandRepo.get(tradeExecution.getCmdTradeId());
+        long deltaQuantity = tradeExecution.getQuantity();
+
+
+        parentCommand.setCompletedQuantity(parentCommand.getCompletedQuantity() + deltaQuantity);
+        parentCommand.setPendingQuantity(parentCommand.getPendingQuantity() - deltaQuantity);
+
+        renderCompletenessStatus(parentCommand);
+
+        return parentCommand;
+    }
+
+        private void renderCompletenessStatus(TradeCommand tradeCommand) {
+            if(tradeCommand.getPendingQuantity() == 0) {
+                tradeCommand.setTradeStatusId("2");
+            } else {
+                tradeCommand.setTradeStatusId("1");
+            }
+        }
 
     public TradeCommand updateAfterExecutionThroughOrderData(RawOrderData data) {
         TradeCommand tradeCommand = commandRepo.get(data.getParentId());

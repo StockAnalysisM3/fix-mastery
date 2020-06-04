@@ -13,7 +13,7 @@ public class Country {
 
     public CountryRepository countryRepo;
 
-    public Country() {}
+    //public Country() {}
 
     public Country(String name, String code) {
         this.name = name;

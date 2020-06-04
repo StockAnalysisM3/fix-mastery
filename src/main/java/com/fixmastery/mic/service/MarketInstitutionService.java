@@ -14,6 +14,7 @@ public class MarketInstitutionService {
     MicDataRepository micRepo;
 
 
+
     public long getSize() {
         return Iterators.size(micRepo.getAll().iterator());
     }

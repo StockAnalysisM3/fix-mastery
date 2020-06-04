@@ -29,21 +29,21 @@ public class MarketInstitutionController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllOrders() {
-        Iterable<MarketInstitution> allOrders = MarketInstitutionService.getAllMics();
-        return new ResponseEntity<Iterable<MarketInstitution>>(allOrders, HttpStatus.OK);
+    public ResponseEntity<?> getAllMics() {
+        Iterable<MarketInstitution> allMics = micService.getAllMics();
+        return new ResponseEntity<Iterable<MarketInstitution>>(allMics, HttpStatus.OK);
     }
 
     @GetMapping("/idset")
     public ResponseEntity<?> getAllMicsIds() {
-        Iterable<String> allIds = MarketInstitutionService.getAllMicIds();
+        Iterable<String> allIds = micService.getAllMicIds();
         return new ResponseEntity<Iterable<String>>(allIds, HttpStatus.OK);
     }
 
     @GetMapping("/byid/{id}")
     public ResponseEntity<?> getMicById(@PathVariable String id) {
-        Optional<MarketInstitution> order = MarketInstitutionService.getMicById(id);
-        return new ResponseEntity<Optional<MarketInstitution>>(order, HttpStatus.OK);
+        Optional<MarketInstitution> mic = micService.getMicById(id);
+        return new ResponseEntity<Optional<MarketInstitution>>(mic, HttpStatus.OK);
     }
 
     @PostMapping("/")
@@ -54,7 +54,7 @@ public class MarketInstitutionController {
             return errorMap;
         }
 
-        MarketInstitutionService.addOrUpdateNewMic(mic);
+        micService.addOrUpdateNewMic(mic);
 
         return new ResponseEntity<MarketInstitution>(mic, HttpStatus.OK);
     }

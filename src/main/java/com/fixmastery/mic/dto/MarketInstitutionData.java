@@ -39,7 +39,7 @@ public class MarketInstitutionData {
     @Column(name="nameinstitutiondescription")
     private String description;
 
-    //public MarketInstitutionData() {}
+    public MarketInstitutionData() {}
 
     public String getId() { return Integer.toString(Id); }
 

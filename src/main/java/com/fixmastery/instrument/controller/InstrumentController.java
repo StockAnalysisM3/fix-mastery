@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import com.fixmastery.errorshandlers.MapValidationErrorsService;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 @Controller
@@ -46,6 +47,13 @@ public class InstrumentController {
         Optional<Instrument> instrument = instrumentService.getInstrumentById(id);
         return new ResponseEntity<Optional<Instrument>>(instrument, HttpStatus.OK);
     }
+
+    @GetMapping("/traded")
+    public ResponseEntity<?> getInstrumentsThatHaveTradingActivity() {
+        Iterable<Instrument> allInstrumentsWithTradingActivity = instrumentService.getInstrumentsThatAreTraded();
+        return new ResponseEntity<Iterable<Instrument>>(allInstrumentsWithTradingActivity, HttpStatus.OK);
+    }
+
 /*
     @PostMapping("/")
     public ResponseEntity<?> addOrUpdateOrder(@RequestBody MarketInstitution mic, BindingResult result) {

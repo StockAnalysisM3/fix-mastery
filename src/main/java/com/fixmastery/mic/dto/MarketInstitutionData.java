@@ -5,15 +5,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "Mic")
+@Table (name = "MIC")
 public class MarketInstitutionData {
+//    @Id
+//    @GeneratedValue
+//    private int Id;
     @Id
-    @GeneratedValue
-    private int Id;
-
     @Column(name="mic")
     @NotNull
-    private String parentMic;
+    private String id;
 
     @Column(name="operatingmic")
     @NotNull
@@ -41,15 +41,15 @@ public class MarketInstitutionData {
 
     public MarketInstitutionData() {}
 
-    public String getId() { return Integer.toString(Id); }
+    //public String getId() { return Integer.toString(Id); }
 
     public String getOperatingMic() { return operatingMic; }
 
-    public void setId(int id) { Id = id; }
+   // public void setId(int id) { Id = id; }
 
-    public String getParentMic() { return parentMic; }
+    public String getId() { return id; }
 
-    public void setParentMic(String mic) { this.parentMic = parentMic; }
+    public void setId(String mic) { this.id = id; }
 
     public String getCountry() { return country; }
 
@@ -79,18 +79,18 @@ public class MarketInstitutionData {
 
     public void setDescription(String description) { this.description = description; }
 
-    @Override
-    public String toString() {
-        return "MarketInstitution{" +
-                "Id=" + Id +
-                ", parentMic=" + parentMic +
-                ", operatingMic='" + operatingMic + '\'' +
-                ", country='" + country + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", acronym='" + acronym + '\'' +
-                ", city='" + city + '\'' +
-                ", website='" + website + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "MarketInstitution{" +
+//                "Id=" + Id +
+//                ", parentMic=" + parentMic +
+//                ", operatingMic='" + operatingMic + '\'' +
+//                ", country='" + country + '\'' +
+//                ", countryCode='" + countryCode + '\'' +
+//                ", acronym='" + acronym + '\'' +
+//                ", city='" + city + '\'' +
+//                ", website='" + website + '\'' +
+//                ", description='" + description + '\'' +
+//                '}';
+//    }
 }

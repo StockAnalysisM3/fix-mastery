@@ -46,17 +46,17 @@ public class MarketInstitutionController {
         return new ResponseEntity<Optional<MarketInstitution>>(mic, HttpStatus.OK);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> addOrUpdateOrder(@RequestBody MarketInstitution mic, BindingResult result) {
-        ResponseEntity<?> errorMap = mapValidationErrorsService.MapValidationErrorsService(result);
-
-        if(errorMap != null) {
-            return errorMap;
-        }
-
-        micService.addOrUpdateNewMic(mic);
-
-        return new ResponseEntity<MarketInstitution>(mic, HttpStatus.OK);
-    }
+//    @PostMapping("/")
+//    public ResponseEntity<?> addOrUpdateOrder(@RequestBody MarketInstitution mic, BindingResult result) {
+//        ResponseEntity<?> errorMap = mapValidationErrorsService.MapValidationErrorsService(result);
+//
+//        if(errorMap != null) {
+//            return errorMap;
+//        }
+//
+//        micService.addOrUpdateNewMic(mic);
+//
+//        return new ResponseEntity<MarketInstitution>(mic, HttpStatus.OK);
+//    }
 
 }

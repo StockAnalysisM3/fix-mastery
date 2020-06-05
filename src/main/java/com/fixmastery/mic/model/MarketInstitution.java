@@ -1,9 +1,5 @@
 package com.fixmastery.mic.model;
 
-import com.fixmastery.mic.dto.MarketInstitutionData;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
@@ -11,7 +7,7 @@ public class MarketInstitution {
     @Id
     private String Id;
     private String countryId;
-    private String name;
+    //private String name;//id
     private String acronym;
     private String city;
     private String website;
@@ -24,14 +20,14 @@ public class MarketInstitution {
     public MarketInstitution(
             String id,
             String cid,
-            String name,
+            //String name,
             String acronym,
             String city,
             String website,
             String description) {
         this.Id = id;
         this.countryId = cid;
-        this.name = name;
+        //this.name = name;
         this.acronym = acronym;
         this.city = city;
         this.website = website;
@@ -49,9 +45,9 @@ public class MarketInstitution {
 
     public void setCountryId(String cid) { this.countryId = cid; }
 
-    public String getName() { return this.name; }
+    //public String getName() { return this.name; }
 
-    public void setName(String name) { this.name = name; }
+    //public void setName(String name) { this.name = name; }
 
     public String getAcronym() { return this.acronym; }
 
@@ -69,16 +65,16 @@ public class MarketInstitution {
 
     public void setDescription(String description) { this.description = description; }
 
-    @Override
-    public String toString() {
-        return "MarketInstitution{" +
-                "id='" + Id + '\'' +
-                ",name='" + name + '\'' +
-                ",countryId='" + countryId + '\'' +
-                ",acronym='" + acronym + '\'' +
-                ",city='" + city + '\'' +
-                ",website='" + website + '\'' +
-                ",description='" + description +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "MarketInstitution{" +
+//                "id='" + Id + '\'' +
+//                ",name='" + name + '\'' +
+//                ",countryId='" + countryId + '\'' +
+//                ",acronym='" + acronym + '\'' +
+//                ",city='" + city + '\'' +
+//                ",website='" + website + '\'' +
+//                ",description='" + description +
+//                '}';
+//    }
 }

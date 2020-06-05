@@ -1,6 +1,6 @@
 package com.fixmastery.mic.service;
 
-import com.fixmastery.mic.dao.MicDataRepository;
+import com.fixmastery.mic.dao.MicRepository;
 import com.fixmastery.mic.model.MarketInstitution;
 import com.google.common.collect.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class MarketInstitutionService {
     @Autowired
-    MicDataRepository micRepo;
+    MicRepository micRepo;
 
 
 
